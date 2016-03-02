@@ -39,9 +39,12 @@ public class World {
     }
 
     public void update() {
-        for (GameObject obj : gameObjects) {
-            obj.update();
+        for (int i = 0; i < NUM_EULER_UPDATES_PER_SCREEN_REFRESH; i++) {
+            for (GameObject obj : gameObjects) {
+                obj.update();
+            }
         }
+
     }
 
     public List<GameObject> getGameObjects() {

@@ -1,3 +1,4 @@
+import Phys2d.GameObject;
 import Phys2d.World;
 
 import javax.swing.*;
@@ -22,16 +23,22 @@ public class View extends JComponent {
         world = w;
         this.width = width;
         this.height = height;
-        objectViews = new ArrayList<>();
+        objectViews = new ArrayList<>(100);
     }
 
     @Override
     public void paintComponent(Graphics g0) {
+        double xScale = getScreenXScale(), yScale = getScreenYScale();
         Graphics2D g = (Graphics2D) g0;
-        g.setBackground(BG);
-        for (Phys2d.GameObject obj : world.getGameObjects()) {
-
+        g.setColor(BG);
+        g.fillRect(0, 0, width, height);
+        for (GameObjectView objView : objectViews) {
+            objView.draw(g, xScale, yScale);
         }
+    }
+
+    public void addObjectView(GameObjectView v) {
+        objectViews.add(v);
     }
 
     public double getScreenXScale() {
@@ -40,6 +47,11 @@ public class View extends JComponent {
 
     public double getScreenYScale() {
         return (1/world.getHeight()*this.height);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(width, height);
     }
 
 
