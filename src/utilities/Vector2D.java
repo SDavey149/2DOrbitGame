@@ -1,102 +1,119 @@
 package utilities;
 
-// mutable 2D vectors
-public final class Vector2D {
+import java.io.Serializable;
 
-    // fields
-    public final double x, y;
+public final class Vector2D implements Serializable {
+    // mutable 2D vectors
 
-    // construct a null vector
+    public double x, y;
+
+    // create a null vector
     public Vector2D() {
-        x = 0;
-        y = 0;
+        this(0, 0);
     }
 
-    // construct a vector with given coordinates
+    // create vector with given coordinates
     public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    // construct a vector that is a copy of the argument
+    // create new vector that is a copy of the argument
     public Vector2D(Vector2D v) {
-        x = v.x;
-        y = v.y;
+        this(v.x, v.y);
     }
 
-    // compare for equality (needs to allow for Object type argument...)
+    public void set(Vector2D v) {
+        this.x = v.x;
+        this.y = v.y;
+    }
+
+    public void set(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public boolean equals(Object o) {
-        Vector2D v = (Vector2D) o;
-        return x == v.x && y == v.y;
+        if (o instanceof Vector2D) {
+            Vector2D v = (Vector2D) o;
+            return x == v.x && y == v.y;
+        } else
+            return false;
     }
 
-    //  magnitude (= "length") of this vector
     public double mag() {
-        return Math.sqrt(x * x + y * y);
+        return Math.hypot(x, y);
     }
 
-    // angle between vector and horizontal axis in radians
-    public double theta() {
+    public double angle() {
         return Math.atan2(y, x);
     }
 
-    // String for displaying vector as text
+    // angle of difference vector between this vector and other vector
+    public double angle(Vector2D other) {
+        return Math.atan2(other.y - y, other.x - x);
+    }
+
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "(" + String.format("%.01f", x) + "," + String.format("%.01f", y)
+                + ")";
     }
 
-    // add argument vector
-    public Vector2D add(Vector2D v) {
-        return new Vector2D(x + v.x, y + v.y);
+    public void add(Vector2D v) {
+        this.x += v.x;
+        this.y += v.y;
     }
 
-    // add coordinate values
-    public Vector2D add(double x, double y) {
-        return new Vector2D(this.x + x, this.y + y);
+    public void add(double x, double y) {
+        this.x += x;
+        this.y += y;
     }
 
-    // weighted add - frequently useful
-    public Vector2D add(Vector2D v, double fac) {
-        return new Vector2D(this.x + v.x * fac, this.x + v.y * fac);
+    // scaled addition - surprisingly useful
+    // note: vector subtraction can be expressed as scaled addition with factor
+    // (-1)
+    public void addScaled(Vector2D v, double fac) {
+        this.x += v.x * fac;
+        this.y += v.y * fac;
     }
 
-    // multiply with factor
-    public Vector2D mult(double fac) {
-        return new Vector2D(x * fac, y * fac);
+
+
+    public void mult(double fac) {
+        this.x *= fac;
+        this.y *= fac;
     }
 
-    // rotate by angle given in radians
-    public Vector2D rotate(double theta) {
+    public void rotate(double theta) {
         double xn = x * Math.cos(theta) - y * Math.sin(theta);
         double yn = x * Math.sin(theta) + y * Math.cos(theta);
-        return new Vector2D(xn, yn);
+        x = xn;
+        y = yn;
     }
 
-    public Vector2D rotate90Anti() {
-        return new Vector2D(-y, x);
-    }
-
-    // scalar product with argument vector
     public double scalarProduct(Vector2D v) {
-        return (x * v.x) + (y * v.y);
+        return x * v.x + y * v.y;
     }
 
-    public double dotProduct(Vector2D v) {
-        //Just an alias of scalarProduct
-        return scalarProduct(v);
-    }
-
-    // distance to argument vector
     public double dist(Vector2D v) {
-        double xn = x - v.x;
-        double yn = y - v.y;
-        return Math.sqrt(xn * xn + yn * yn);
-
+        return Math.hypot(x - v.x, y - v.y);
     }
 
-    // normalise vector so that mag becomes 1
-    // direction is unchanged
-    public Vector2D normalise() {
-        return new Vector2D(x / mag(), y / mag());
+
+    public void normalise() {
+        double len = mag();
+        x /= len;
+        y /= len;
+    }
+
+
+
+    public static Vector2D minus(Vector2D v1, Vector2D v2) {
+        return new Vector2D(v1.x - v2.x, v1.y - v2.y);
+    }
+
+
+    public Vector2D rotate90degreesAnticlockwise() {
+        return new Vector2D(-y,x);
     }
 }
