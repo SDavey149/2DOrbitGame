@@ -5,6 +5,12 @@ import utilities.Vector2D;
 /**
  * Created by scottdavey on 02/03/2016.
  */
-public interface Shape {
-    boolean intersects(Vector2D pos);
+public abstract class Shape {
+    GameObject object;
+
+    public Shape(GameObject obj) {
+        object = obj;
+    }
+
+    public abstract boolean overlaps(Shape shape);
 }

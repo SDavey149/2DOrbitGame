@@ -8,8 +8,6 @@ import utilities.Vector2D;
  */
 public class RigidBody extends Body {
 
-    private Vector2D velocity;
-    private Vector2D acceleration;
     private double mass;
     private double rollingFriction;
     private Shape shape;
@@ -19,21 +17,19 @@ public class RigidBody extends Body {
         mass = 0;
         rollingFriction = 0;
         this.shape = shape;
-        velocity = new Vector2D(0,0);
-        acceleration = new Vector2D(0,0);
     }
 
     @Override
     public void update() {
         Vector2D forceToApply = new Vector2D();
         forceToApply.add(getParticleWeight());
-        acceleration.set(0, 0);
+        object.getAcceleration().set(0, 0);
         if (forceToApply.mag() > 0) {
-            acceleration.addScaled(forceToApply, 1 / mass);
+            object.getAcceleration().addScaled(forceToApply, 1 / mass);
         }
         //basic Euler
-        object.getPosition().addScaled(velocity, World.DELTA_T);
-        velocity.addScaled(acceleration, World.DELTA_T);
+        object.getPosition().addScaled(object.getVelocity(), World.DELTA_T);
+        object.getVelocity().addScaled(object.getAcceleration(), World.DELTA_T);
     }
 
     public void setMass(double mass) {
