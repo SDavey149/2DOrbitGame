@@ -42,7 +42,7 @@ public class Line extends Shape {
         Vector2D lineToC = Vector2D.minus(circle.object.getPosition(), start);
         double distNormal = lineToC.scalarProduct(normal);
         double distLine = lineToC.scalarProduct(tangent);
-        return distNormal <= circle.radius && distLine >= 0 && distLine <= length;
+        return distNormal <= circle.getRadius() && distLine >= 0 && distLine <= length;
     }
 
 

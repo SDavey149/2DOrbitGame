@@ -1,5 +1,7 @@
 package Phys2d;
 
+import utilities.Vector2D;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  */
 public class World {
     static double gravity = 9.8;
+    public static final double G = Math.pow(6.673, -11);
 
     private double width;
     private double height;
@@ -35,7 +38,40 @@ public class World {
     }
 
     public void addGameObject(GameObject obj) {
+        obj.setWorld(this);
         gameObjects.add(obj);
+    }
+
+    public Vector2D getGravitionalForce(GameObject obj) {
+        Vector2D force = new Vector2D(0,0);
+        for (GameObject o : gameObjects) {
+            if (o != obj && obj.hasRigidBody()) {
+                RigidBody b = (RigidBody)obj.getBody();
+                force.add(getGravitionalForce(obj.getPosition(), b.getMass()));
+            }
+        }
+        return force;
+    }
+
+    public Vector2D getGravitionalForce(Vector2D pos, double mass) {
+        Vector2D force = new Vector2D(0,0);
+        for (GameObject o : gameObjects) {
+            if (o.getPosition() != pos && o.hasRigidBody()) {
+                Vector2D oPos = new Vector2D(pos);
+                oPos.mult(-1);
+                Vector2D objToOther = new Vector2D(o.getPosition());
+                objToOther.add(oPos);
+
+                Vector2D direction = new Vector2D(objToOther);
+                direction.normalise();
+                //gravitational (G*m1*m2)/d^2; m = mass, d = distance
+                RigidBody b = (RigidBody)o.getBody();
+                double forceMag = (World.G*mass*b.getMass())/objToOther.mag();
+                direction.mult(forceMag);
+                force.add(direction);
+            }
+        }
+        return force;
     }
 
     public void update() {

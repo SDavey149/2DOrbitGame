@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         World world = new World(100,100);
         GameObject obj = new GameObject(new Vector2D(100,100));
-        RigidBody b = new RigidBody(obj, null);
+        RigidBody b = new RigidBody(obj, 10);
         b.setMass(10);
         obj.addRigidBody(b);
         world.addGameObject(obj);

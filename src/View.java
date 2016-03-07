@@ -30,6 +30,8 @@ public class View extends JComponent {
     public void paintComponent(Graphics g0) {
         double xScale = getScreenXScale(), yScale = getScreenYScale();
         Graphics2D g = (Graphics2D) g0;
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(BG);
         g.fillRect(0, 0, width, height);
         for (GameObjectView objView : objectViews) {
@@ -46,7 +48,7 @@ public class View extends JComponent {
     }
 
     public double getScreenYScale() {
-        return (1/world.getHeight()*this.height);
+        return (this.height/world.getHeight());
     }
 
     @Override
