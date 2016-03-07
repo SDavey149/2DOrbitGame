@@ -13,6 +13,7 @@ public class GameObject {
     private Vector2D acceleration;
     private Shape shape;
     private double rotation;
+    public double mass;
     private Body body;
     public World world;
 

@@ -55,7 +55,7 @@ public final class Vector2D implements Serializable {
     }
 
     public String toString() {
-        return "(" + String.format("%.01f", x) + "," + String.format("%.01f", y)
+        return "(" + String.format("%.09f", x) + "," + String.format("%.09f", y)
                 + ")";
     }
 

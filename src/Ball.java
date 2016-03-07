@@ -21,7 +21,7 @@ public class Ball extends GameObjectView {
         int x = (int) (object.getPosition().x*xScreenScale);
         int y = (int) (JEasyFrame.SCREEN.height-object.getPosition().y*yScreenScale);
         g.setColor(Color.RED);
-        double radius = circle.getRadius();
+        double radius = circle.getRadius()*xScreenScale;
         g.fillOval((int)(x - radius), (int)(y - radius), (int)(2 * radius), (int)(2 * radius));
     }
 }
