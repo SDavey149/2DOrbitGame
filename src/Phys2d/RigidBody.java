@@ -26,15 +26,10 @@ public class RigidBody extends Body {
         object.getAcceleration().set(0, 0);
         if (forceToApply.mag() > 0) {
             object.getAcceleration().addScaled(forceToApply, 1/mass);
-            System.out.println("total force: " + forceToApply);
-            System.out.println("Accel: " + object.getAcceleration());
         }
         //basic Euler
         object.getPosition().addScaled(object.getVelocity(), World.DELTA_T);
-        System.out.println("velocity before: " + object.getVelocity());
         object.getVelocity().addScaled(object.getAcceleration(), World.DELTA_T);
-        System.out.println("velocity after: " + object.getVelocity());
-        System.out.println("v: " + object.getVelocity());
         /*Vector2D vel2=new Vector2D(object.getVelocity());
         Vector2D pos2=new Vector2D(object.getPosition());
         //1 step ahead

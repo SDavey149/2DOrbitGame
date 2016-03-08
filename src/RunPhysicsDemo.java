@@ -31,7 +31,7 @@ public class RunPhysicsDemo {
     public static void setup(World world, View view) {
         GameObject obj = new GameObject(new Vector2D(60,70));
         obj.setShape(new Circle(obj, 1));
-        obj.setVelocity(new Vector2D(-5,0));
+        obj.setVelocity(new Vector2D(-4,0));
         obj.mass = 1;
         RigidBody b = new RigidBody(obj, 1);
         //obj.setVelocity(new Vector2D(2,-1));
@@ -50,6 +50,10 @@ public class RunPhysicsDemo {
 
         Ball ball2 = new Ball(obj2);
         view.addObjectView(ball2);
+
+        GameObject obj3 = new GameObject(new Vector2D(20,20));
+        Ship ship = new Ship(obj3);
+        view.addObjectView(ship);
 
 
         //make da barriers - bottom
