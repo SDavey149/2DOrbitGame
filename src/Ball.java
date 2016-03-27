@@ -10,9 +10,12 @@ import java.awt.*;
 public class Ball extends GameObjectView {
 
     Circle circle;
+    Color color;
+
     public Ball(GameObject obj) {
         super(obj);
         circle = (Circle)obj.getShape();
+        color = Color.RED;
     }
 
     @Override
@@ -20,8 +23,12 @@ public class Ball extends GameObjectView {
 
         int x = (int) (object.getPosition().x*xScreenScale);
         int y = (int) (JEasyFrame.SCREEN.height-object.getPosition().y*yScreenScale);
-        g.setColor(Color.RED);
+        g.setColor(color);
         double radius = circle.getRadius()*xScreenScale;
         g.fillOval((int)(x - radius), (int)(y - radius), (int)(2 * radius), (int)(2 * radius));
+    }
+
+    public void setColor(Color c) {
+        color = c;
     }
 }

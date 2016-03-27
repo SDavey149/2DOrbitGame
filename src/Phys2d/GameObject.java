@@ -1,6 +1,5 @@
 package Phys2d;
 
-import com.sun.org.apache.xerces.internal.impl.dv.dtd.NOTATIONDatatypeValidator;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.Vector2D;
 
@@ -49,16 +48,17 @@ public class GameObject {
         return position;
     }
 
-    public void addRigidBody(RigidBody body) {
+    public void addRigidBody(Body body) {
         this.body = body;
     }
 
-    public void update() {
-        body.update();
+    public void update(double delta) {
+        body.update(delta);
     }
 
     public boolean hasRigidBody() {
-        return body instanceof RigidBody;
+        return body instanceof RigidBodyImproved
+                || body instanceof RigidBodyEuler;
     }
 
     public Body getBody() {
@@ -67,7 +67,14 @@ public class GameObject {
 
     public Vector2D getGravitationalForce() {
         if (world != null) {
-            return world.getGravitionalForce(this);
+            return world.getGravitionalForce(this, this.getPosition(), this.mass);
+        }
+        return new Vector2D(0,0);
+    }
+
+    public Vector2D getGravitationalForceStepAhead(Vector2D position, double mass) {
+        if (world != null) {
+            return world.getGravitionalForce(this, position, mass);
         }
         return new Vector2D(0,0);
     }
@@ -87,4 +94,5 @@ public class GameObject {
     public Vector2D getAcceleration() {
         return acceleration;
     }
+
 }

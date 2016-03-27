@@ -9,12 +9,12 @@ public class Main {
     public static void main(String[] args) throws Exception {
         World world = new World(100,100);
         GameObject obj = new GameObject(new Vector2D(100,100));
-        RigidBody b = new RigidBody(obj, 10);
+        RigidBodyImproved b = new RigidBodyImproved(obj, 10);
         b.setMass(10);
         obj.addRigidBody(b);
         world.addGameObject(obj);
         for (int i = 0; i < 2f/World.DELTA_T; i++) {
-            world.update();
+            world.update(20/1000);
             System.out.println(obj.getPosition());
         }
     }

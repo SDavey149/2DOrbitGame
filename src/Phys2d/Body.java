@@ -10,7 +10,7 @@ public class Body {
         object = obj;
     }
 
-    public void update() {
+    public void update(double delta) {
         //do nothing
     }
 

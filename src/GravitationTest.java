@@ -1,4 +1,3 @@
-import Phys2d.RigidBody;
 import Phys2d.World;
 import utilities.Vector2D;
 
