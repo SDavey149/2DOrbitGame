@@ -12,5 +12,9 @@ public abstract class Shape {
         object = obj;
     }
 
+    public GameObject getObject() {
+        return object;
+    }
+
     public abstract boolean overlaps(Shape shape);
 }
