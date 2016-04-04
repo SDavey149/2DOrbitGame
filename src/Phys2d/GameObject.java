@@ -67,14 +67,14 @@ public class GameObject {
 
     public Vector2D getGravitationalForce() {
         if (world != null) {
-            return world.getGravitionalForce(this, this.getPosition(), this.mass);
+            return world.getGravitationalForce(this, this.getPosition(), this.mass);
         }
         return new Vector2D(0,0);
     }
 
     public Vector2D getGravitationalForceStepAhead(Vector2D position, double mass) {
         if (world != null) {
-            return world.getGravitionalForce(this, position, mass);
+            return world.getGravitationalForce(this, position, mass);
         }
         return new Vector2D(0,0);
     }

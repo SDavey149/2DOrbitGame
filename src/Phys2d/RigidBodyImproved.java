@@ -9,10 +9,10 @@ import utilities.Vector2D;
 public class RigidBodyImproved extends Body {
 
     private double rollingFriction;
-    Vector2D forceToApply;
-    double mass;
+    private Vector2D forceToApply;
+    private double mass;
 
-    public RigidBodyImproved(GameObject obj, double mass) {
+    public RigidBodyImproved(GameObject obj) {
         super(obj);
         this.mass = obj.mass;
         rollingFriction = 0;
@@ -56,14 +56,6 @@ public class RigidBodyImproved extends Body {
         object.getVelocity().addScaled(acc2, delta);
 
         forceToApply = new Vector2D();
-    }
-
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
-
-    public double getMass() {
-        return mass;
     }
 
     private Vector2D getParticleWeight() {

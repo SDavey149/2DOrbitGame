@@ -48,23 +48,24 @@ public class World {
         barriers.add(bar);
     }
 
-    public Vector2D getGravitionalForce(GameObject obj, Vector2D position, double mass) {
+    public Vector2D getGravitationalForce(GameObject obj, Vector2D pos, double mass) {
         Vector2D force = new Vector2D(0,0);
         if (obj.hasRigidBody()) {
             for (GameObject o : gameObjects) {
-                if (o != obj && !o.hasRigidBody()) {
+                if (o != obj) {
                     //make a copy
-                    position = new Vector2D(position);
+                    Vector2D position = new Vector2D(pos);
                     position.mult(-1);
                     Vector2D objToOther = new Vector2D(o.getPosition());
                     objToOther.add(position);
-
                     Vector2D direction = new Vector2D(objToOther);
                     direction.normalise();
                     //gravitational (G*m1*m2)/d^2; m = mass, d = distance
-                    double forceMag = (World.G*o.mass*mass)/(objToOther.mag()*objToOther.mag());
-                    direction.mult(forceMag);
-                    force.add(direction);
+                    if (objToOther.mag() > 0) {
+                        double forceMag = (World.G*o.mass*mass)/(objToOther.mag()*objToOther.mag());
+                        direction.mult(forceMag);
+                        force.add(direction);
+                    }
                 }
             }
         }

@@ -29,12 +29,11 @@ public class RunPhysicsDemo {
     }
 
     public static void setup(World world, View view) {
-        GameObject obj = new GameObject(new Vector2D(50,60));
+        GameObject obj = new GameObject(new Vector2D(50,80));
         obj.setShape(new Circle(obj, 1));
-        obj.setVelocity(new Vector2D(-7,0));
-        obj.mass = 1;
-        RigidBodyImproved b = new RigidBodyImproved(obj, 1);
-        //obj.setVelocity(new Vector2D(2,-1));
+        obj.setVelocity(new Vector2D(-4,0));
+        obj.mass = 10;
+        RigidBodyImproved b = new RigidBodyImproved(obj);
         obj.addRigidBody(b);
         world.addGameObject(obj);
 
@@ -44,15 +43,14 @@ public class RunPhysicsDemo {
         ball1.setVelocity(new Vector2D(-7, 0));
         ball1.mass = 1;
         RigidBodyEuler b_ball = new RigidBodyEuler(ball1, 1);
-        //obj.setVelocity(new Vector2D(2,-1));
         ball1.addRigidBody(b_ball);
         world.addGameObject(ball1);
 
         GameObject obj2 = new GameObject(new Vector2D(50,50));
         obj2.setShape(new Circle(obj2, 2));
         obj2.mass = 10000000000000.0;
-        //RigidBodyImproved b2 = new RigidBodyImproved(obj2, 10000000000000.0);
-        //oj2.addRigidBody(b2);
+        RigidBodyImproved b2 = new RigidBodyImproved(obj2);
+        obj2.addRigidBody(b2);
         world.addGameObject(obj2);
 
         Ball ball = new Ball(obj);
