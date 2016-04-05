@@ -36,7 +36,7 @@ public class RunPhysicsDemo {
         obj.mass = 10;
         RigidBodyImproved b = new RigidBodyImproved(obj);
         obj.addRigidBody(b);
-        world.addGameObject(obj);
+        //world.addGameObject(obj);
 
         //blue ball
         GameObject ball1 = new GameObject(new Vector2D(50,60));
@@ -45,7 +45,7 @@ public class RunPhysicsDemo {
         ball1.mass = 1;
         RigidBodyEuler b_ball = new RigidBodyEuler(ball1, 1);
         ball1.addRigidBody(b_ball);
-        world.addGameObject(ball1);
+        //world.addGameObject(ball1);
 
         GameObject obj2 = new GameObject(new Vector2D(50,50));
         obj2.setShape(new Circle(obj2, 2));
@@ -53,14 +53,14 @@ public class RunPhysicsDemo {
         RigidBodyImproved b2 = new RigidBodyImproved(obj2);
         obj2.addRigidBody(b2);
         world.addGameObject(obj2);
-        
+
         GameObject obj99 = new GameObject(new Vector2D(50,30));
         obj99.setShape(new Circle(obj99, 1));
         obj99.setVelocity(new Vector2D(-5,0));
         obj99.mass = 10;
         RigidBodyImproved b99 = new RigidBodyImproved(obj99);
         obj99.addRigidBody(b99);
-        world.addGameObject(obj99);
+        //world.addGameObject(obj99);
 
 
         Ball ball = new Ball(obj);
@@ -76,9 +76,11 @@ public class RunPhysicsDemo {
         blueBall.setColor(Color.BLUE);
         view.addObjectView(blueBall);
 
-        GameObject obj3 = new GameObject(new Vector2D(20,20));
+        GameObject obj3 = new GameObject(new Vector2D(10,10));
+        obj3.setShape(new Circle(obj3, 1));
+        obj3.mass = 2;
         obj3.addRigidBody(new RigidBodyImproved(obj3));
-        obj3.mass = 0;
+        obj3.setVelocity(new Vector2D(5,0));
         Ship ship = new Ship(obj3);
         view.addObjectView(ship);
         world.addGameObject(obj3);

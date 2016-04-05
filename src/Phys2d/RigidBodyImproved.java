@@ -36,7 +36,6 @@ public class RigidBodyImproved extends Body {
         //1 step ahead
         pos2.addScaled(object.getVelocity(), delta);
         vel2.addScaled(object.getAcceleration(), delta);
-
         Vector2D acc2=new Vector2D();
         Vector2D forceToApply2 = new Vector2D();
         forceToApply2.add(object.getGravitationalForceStepAhead(pos2, mass));
@@ -52,6 +51,7 @@ public class RigidBodyImproved extends Body {
         vel2.mult(0.5);
         acc2.add(object.getAcceleration());
         acc2.mult(0.5);
+
         object.getPosition().addScaled(vel2, delta);
         object.getVelocity().addScaled(acc2, delta);
 

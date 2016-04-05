@@ -17,6 +17,9 @@ public class Ship extends GameObjectView {
 
     @Override
     public void notificationOfNewTimeStep(double delta) {
+        System.out.println(object.getPosition());
+        System.out.println("A: " + object.getAcceleration());
+        System.out.println("V: " + object.getVelocity());
         if (BasicKeyListener.isMoveUpPressed()) {
             object.setVelocity(new Vector2D(0, 20));
         }
