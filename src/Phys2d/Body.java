@@ -11,7 +11,8 @@ public class Body {
     }
 
     public void update(double delta) {
-        //do nothing
+        object.getPosition().addScaled(object.getVelocity(), delta);
+        object.getVelocity().addScaled(object.getAcceleration(), delta);
     }
 
     public boolean collidesWith(GameObject o1, GameObject o2) {

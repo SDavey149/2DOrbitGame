@@ -1,4 +1,5 @@
 import Phys2d.*;
+import utilities.BasicKeyListener;
 import utilities.JEasyFrame;
 import utilities.Vector2D;
 
@@ -52,6 +53,15 @@ public class RunPhysicsDemo {
         RigidBodyImproved b2 = new RigidBodyImproved(obj2);
         obj2.addRigidBody(b2);
         world.addGameObject(obj2);
+        
+        GameObject obj99 = new GameObject(new Vector2D(50,30));
+        obj99.setShape(new Circle(obj99, 1));
+        obj99.setVelocity(new Vector2D(-5,0));
+        obj99.mass = 10;
+        RigidBodyImproved b99 = new RigidBodyImproved(obj99);
+        obj99.addRigidBody(b99);
+        world.addGameObject(obj99);
+
 
         Ball ball = new Ball(obj);
         view.addObjectView(ball);
@@ -59,13 +69,19 @@ public class RunPhysicsDemo {
         Ball ball2 = new Ball(obj2);
         view.addObjectView(ball2);
 
+        Ball ball99 = new Ball(obj99);
+        view.addObjectView(ball99);
+
         Ball blueBall = new Ball(ball1);
         blueBall.setColor(Color.BLUE);
         view.addObjectView(blueBall);
 
         GameObject obj3 = new GameObject(new Vector2D(20,20));
+        obj3.addRigidBody(new RigidBodyImproved(obj3));
+        obj3.mass = 0;
         Ship ship = new Ship(obj3);
         view.addObjectView(ship);
+        world.addGameObject(obj3);
 
 
         //make da barriers - bottom
@@ -100,6 +116,9 @@ public class RunPhysicsDemo {
         BarrierLine2 bar5View = new BarrierLine2(barrier);
         view.addObjectView(bar5View);*/
 
+        view.addKeyListener(new BasicKeyListener());
+        view.requestFocus();
+
 
     }
 
@@ -114,6 +133,11 @@ public class RunPhysicsDemo {
             }
             lastTime = currentTime;
             delta = delta/World.NUM_EULER_UPDATES_PER_SCREEN_REFRESH;
+            for (ObjectView objectView : v.objectViews) {
+                if (objectView instanceof GameObjectView) {
+                    ((GameObjectView) objectView).notificationOfNewTimeStep(delta);
+                }
+            }
             w.update(delta);
             v.repaint();
             try {

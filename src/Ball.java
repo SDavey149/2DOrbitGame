@@ -19,6 +19,11 @@ public class Ball extends GameObjectView {
     }
 
     @Override
+    public void notificationOfNewTimeStep(double delta) {
+
+    }
+
+    @Override
     public void draw(Graphics2D g, double xScreenScale, double yScreenScale) {
 
         int x = (int) (object.getPosition().x*xScreenScale);

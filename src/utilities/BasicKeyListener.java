@@ -8,7 +8,7 @@ public class BasicKeyListener extends KeyAdapter {
      * Creation Date: 2016-01-28
      * Significant changes applied:
      */
-    private static boolean rotateRightKeyPressed, rotateLeftKeyPressed, thrustKeyPressed, beamOn;
+    private static boolean rotateRightKeyPressed, rotateLeftKeyPressed, upKeyPressed, downKeyPressed;
 
     public static boolean isRotateRightKeyPressed() {
         return rotateRightKeyPressed;
@@ -18,19 +18,18 @@ public class BasicKeyListener extends KeyAdapter {
         return rotateLeftKeyPressed;
     }
 
-    public static boolean isThrustKeyPressed() {
-        return thrustKeyPressed;
+    public static boolean isMoveUpPressed() {
+        return upKeyPressed;
     }
 
-    public static boolean isBeamOn() { return beamOn; }
+    public static boolean isMoveDownPressed() { return downKeyPressed; }
 
-    public static void setBeam(boolean status) { beamOn = status; }
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
             case KeyEvent.VK_UP:
-                thrustKeyPressed = true;
+                upKeyPressed = true;
                 break;
             case KeyEvent.VK_LEFT:
                 rotateLeftKeyPressed = true;
@@ -38,8 +37,8 @@ public class BasicKeyListener extends KeyAdapter {
             case KeyEvent.VK_RIGHT:
                 rotateRightKeyPressed = true;
                 break;
-            case KeyEvent.VK_SPACE:
-                beamOn = !beamOn;
+            case KeyEvent.VK_DOWN:
+                downKeyPressed = true;
                 break;
 
         }
@@ -49,13 +48,16 @@ public class BasicKeyListener extends KeyAdapter {
         int key = e.getKeyCode();
         switch (key) {
             case KeyEvent.VK_UP:
-                thrustKeyPressed = false;
+                upKeyPressed = false;
                 break;
             case KeyEvent.VK_LEFT:
                 rotateLeftKeyPressed = false;
                 break;
             case KeyEvent.VK_RIGHT:
                 rotateRightKeyPressed = false;
+                break;
+            case KeyEvent.VK_DOWN:
+                downKeyPressed = false;
                 break;
         }
     }

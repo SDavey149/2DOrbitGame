@@ -1,5 +1,7 @@
 import Phys2d.GameObject;
+import utilities.BasicKeyListener;
 import utilities.JEasyFrame;
+import utilities.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -11,6 +13,16 @@ public class Ship extends GameObjectView {
 
     public Ship(GameObject obj) {
         super(obj);
+    }
+
+    @Override
+    public void notificationOfNewTimeStep(double delta) {
+        if (BasicKeyListener.isMoveUpPressed()) {
+            object.setVelocity(new Vector2D(0, 20));
+        }
+        if (BasicKeyListener.isMoveDownPressed()) {
+            object.setVelocity(new Vector2D(0, -20));
+        }
     }
 
     @Override
@@ -26,7 +38,6 @@ public class Ship extends GameObjectView {
 
         AffineTransform at = g.getTransform();
         g.translate(x,y);
-        double rot = 80;
         g.rotate(Math.PI/2);
         g.scale(SCALE, SCALE);
         g.setColor(Color.GREEN);
@@ -37,4 +48,5 @@ public class Ship extends GameObjectView {
         }*/
         g.setTransform(at);
     }
+
 }

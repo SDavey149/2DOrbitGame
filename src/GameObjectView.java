@@ -12,4 +12,6 @@ public abstract class GameObjectView implements ObjectView {
         this.object = object;
     }
 
+    public abstract void notificationOfNewTimeStep(double delta);
+
 }
