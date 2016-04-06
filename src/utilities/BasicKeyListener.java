@@ -8,7 +8,8 @@ public class BasicKeyListener extends KeyAdapter {
      * Creation Date: 2016-01-28
      * Significant changes applied:
      */
-    private static boolean rotateRightKeyPressed, rotateLeftKeyPressed, upKeyPressed, downKeyPressed;
+    private static boolean rotateRightKeyPressed, rotateLeftKeyPressed, upKeyPressed, downKeyPressed,
+    firePressed;
 
     public static boolean isRotateRightKeyPressed() {
         return rotateRightKeyPressed;
@@ -23,6 +24,10 @@ public class BasicKeyListener extends KeyAdapter {
     }
 
     public static boolean isMoveDownPressed() { return downKeyPressed; }
+
+    public static boolean isFireButtonPressed() {
+        return firePressed;
+    }
 
 
     public void keyPressed(KeyEvent e) {
@@ -39,6 +44,9 @@ public class BasicKeyListener extends KeyAdapter {
                 break;
             case KeyEvent.VK_DOWN:
                 downKeyPressed = true;
+                break;
+            case KeyEvent.VK_SPACE:
+                firePressed = true;
                 break;
 
         }
@@ -58,6 +66,9 @@ public class BasicKeyListener extends KeyAdapter {
                 break;
             case KeyEvent.VK_DOWN:
                 downKeyPressed = false;
+                break;
+            case KeyEvent.VK_SPACE:
+                firePressed = false;
                 break;
         }
     }

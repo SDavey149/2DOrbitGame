@@ -1,7 +1,6 @@
-import Phys2d.GameObject;
+import Phys2d.*;
 import utilities.BasicKeyListener;
 import utilities.JEasyFrame;
-import utilities.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -11,20 +10,48 @@ import java.awt.geom.AffineTransform;
  */
 public class Ship extends GameObjectView {
 
-    public Ship(GameObject obj) {
+    private static int THRUST_FORCE = 44000;
+
+    private RigidBodyImproved rgb;
+    private World world;
+    private View view;
+
+    public Ship(GameObject obj, World world, View view) {
         super(obj);
+        //check this
+        rgb = (RigidBodyImproved) obj.getBody();
+        this.world = world;
+        this.view = view;
     }
 
     @Override
     public void notificationOfNewTimeStep(double delta) {
-        System.out.println(object.getPosition());
-        System.out.println("A: " + object.getAcceleration());
-        System.out.println("V: " + object.getVelocity());
         if (BasicKeyListener.isMoveUpPressed()) {
-            object.setVelocity(new Vector2D(0, 20));
+            rgb.addForce(new Vector2D(0, 1 * THRUST_FORCE));
+        } else if (BasicKeyListener.isMoveDownPressed()) {
+            rgb.addForce(new Vector2D(0, -1*THRUST_FORCE));
         }
-        if (BasicKeyListener.isMoveDownPressed()) {
-            object.setVelocity(new Vector2D(0, -20));
+        if (BasicKeyListener.isRotateLeftKeyPressed()) {
+            object.setRotation(object.getRotation() - Math.PI * delta);
+        }
+        else if (BasicKeyListener.isRotateRightKeyPressed()) {
+            object.setRotation(object.getRotation() + Math.PI * delta);
+        }
+        if (BasicKeyListener.isFireButtonPressed()) {
+            GameObject bullet = new GameObject(new Vector2D(object.getPosition()));
+            bullet.setShape(new Circle(bullet, 0.1));
+            Vector2D bulletVelocity = object.getDirection();
+            bulletVelocity.mult(5);
+            bullet.setVelocity(bulletVelocity);
+            bullet.mass = 0.1;
+            bullet.addRigidBody(new RigidBodyImproved(bullet));
+            world.addGameObject(bullet);
+
+            Ball ball = new Ball(bullet);
+            ball.setColor(Color.GREEN);
+            view.addObjectView(ball);
+
+
         }
     }
 
@@ -41,7 +68,7 @@ public class Ship extends GameObjectView {
 
         AffineTransform at = g.getTransform();
         g.translate(x,y);
-        g.rotate(Math.PI/2);
+        g.rotate(Math.PI/2 - object.getRotation());
         g.scale(SCALE, SCALE);
         g.setColor(Color.GREEN);
         g.fillPolygon(XP, YP, XP.length);

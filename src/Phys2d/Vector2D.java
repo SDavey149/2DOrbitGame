@@ -1,4 +1,4 @@
-package utilities;
+package Phys2d;
 
 import java.io.Serializable;
 

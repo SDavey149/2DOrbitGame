@@ -1,6 +1,5 @@
-import Phys2d.GameObject;
 import Phys2d.World;
-import utilities.Vector2D;
+import Phys2d.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +20,7 @@ public class View extends JComponent {
     private int height;
 
     List<ObjectView> objectViews;
+    List<ObjectView> pending;
     List<Vector2D> stars;
 
     public View(World w, int width, int height) {
@@ -29,6 +29,7 @@ public class View extends JComponent {
         this.height = height;
         objectViews = new ArrayList<>(100);
         random = new Random();
+        pending = new ArrayList<>(3);
 
         //star background
         stars = new ArrayList<Vector2D>(200);
@@ -50,10 +51,12 @@ public class View extends JComponent {
         for (ObjectView objView : objectViews) {
             objView.draw(g, xScale, yScale);
         }
+        objectViews.addAll(pending);
+        pending.clear();
     }
 
     public void addObjectView(ObjectView v) {
-        objectViews.add(v);
+        pending.add(v);
     }
 
     public void drawStars(Graphics2D g) {

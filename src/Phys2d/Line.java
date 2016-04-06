@@ -1,7 +1,5 @@
 package Phys2d;
 
-import utilities.Vector2D;
-
 /**
  * Created by scottdavey on 06/03/2016.
  */

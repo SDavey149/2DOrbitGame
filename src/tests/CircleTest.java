@@ -3,7 +3,7 @@ package tests;
 import Phys2d.Circle;
 import Phys2d.GameObject;
 import junit.framework.TestCase;
-import utilities.Vector2D;
+import Phys2d.Vector2D;
 
 /**
  * Created by scottdavey on 02/04/2016.

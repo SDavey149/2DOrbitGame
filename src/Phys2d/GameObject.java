@@ -1,8 +1,5 @@
 package Phys2d;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import utilities.Vector2D;
-
 /**
  * Created by scottdavey on 08/02/2016.
  */
@@ -79,10 +76,6 @@ public class GameObject {
         return new Vector2D(0,0);
     }
 
-    public void applyForce() {
-        throw new NotImplementedException();
-    }
-
     public Vector2D getVelocity() {
         return velocity;
     }
@@ -93,6 +86,14 @@ public class GameObject {
 
     public Vector2D getAcceleration() {
         return acceleration;
+    }
+
+    public void setAcceleration(Vector2D acc) {
+        acceleration = acc;
+    }
+
+    public Vector2D getDirection() {
+        return new Vector2D(Math.cos(rotation), Math.sin(rotation));
     }
 
 }

@@ -1,7 +1,7 @@
 import Phys2d.GameObject;
 import Phys2d.Line;
 import utilities.JEasyFrame;
-import utilities.Vector2D;
+import Phys2d.Vector2D;
 
 import java.awt.*;
 

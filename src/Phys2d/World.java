@@ -1,8 +1,5 @@
 package Phys2d;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLBoundOperation;
-import utilities.Vector2D;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +13,8 @@ public class World {
     private double width;
     private double height;
 
-    public static final int DELAY = 30;
-    public static final int NUM_EULER_UPDATES_PER_SCREEN_REFRESH=10;
+    public static final int DELAY = 20;
+    public static final int NUM_EULER_UPDATES_PER_SCREEN_REFRESH=1;
     // estimate for time between two frames in seconds
     public static final double DELTA_T = DELAY / 1000.0 / NUM_EULER_UPDATES_PER_SCREEN_REFRESH ;
 

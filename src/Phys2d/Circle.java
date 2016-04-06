@@ -1,14 +1,12 @@
 package Phys2d;
 
-import utilities.Vector2D;
-
 /**
  * Created by scottdavey on 06/03/2016.
  */
 public class Circle extends Shape {
     private double radius;
 
-    public Circle(GameObject obj, int radius) {
+    public Circle(GameObject obj, double radius) {
         super(obj);
         this.radius = radius;
     }

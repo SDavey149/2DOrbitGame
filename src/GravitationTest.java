@@ -1,5 +1,5 @@
 import Phys2d.World;
-import utilities.Vector2D;
+import Phys2d.Vector2D;
 
 /**
  * Created by scottdavey on 07/03/2016.
