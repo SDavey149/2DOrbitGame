@@ -32,16 +32,20 @@ public class Ship extends GameObjectView {
             rgb.addForce(new Vector2D(0, -1*THRUST_FORCE));
         }
         if (BasicKeyListener.isRotateLeftKeyPressed()) {
-            object.setRotation(object.getRotation() - Math.PI * delta);
+            object.rotate(-Math.PI / 6 * delta);
+            Vector2D rotation = object.getRotation();
+            System.out.println("rotation vec: " + rotation);
+            System.out.println("angle is: " + Math.atan2(rotation.y, rotation.x));
         }
         else if (BasicKeyListener.isRotateRightKeyPressed()) {
-            object.setRotation(object.getRotation() + Math.PI * delta);
+            object.rotate(Math.PI/6 * delta);
         }
         if (BasicKeyListener.isFireButtonPressed()) {
             GameObject bullet = new GameObject(new Vector2D(object.getPosition()));
-            bullet.setShape(new Circle(bullet, 0.1));
-            Vector2D bulletVelocity = object.getDirection();
-            bulletVelocity.mult(5);
+            bullet.setShape(new Circle(bullet, 0.5));
+            Vector2D bulletVelocity = new Vector2D(object.getRotation());
+            System.out.println("rotation of bullet: " + Math.atan2(bulletVelocity.y, bulletVelocity.x));
+            bulletVelocity.mult(100);
             bullet.setVelocity(bulletVelocity);
             bullet.mass = 0.1;
             bullet.addRigidBody(new RigidBodyImproved(bullet));
@@ -67,8 +71,9 @@ public class Ship extends GameObjectView {
         final double SCALE = 10; //radius
 
         AffineTransform at = g.getTransform();
-        g.translate(x,y);
-        g.rotate(Math.PI/2 - object.getRotation());
+        g.translate(x, y);
+        Vector2D rotation = new Vector2D(object.getRotation());
+        g.rotate(Math.PI / 2 - Math.atan2(rotation.y, rotation.x));
         g.scale(SCALE, SCALE);
         g.setColor(Color.GREEN);
         g.fillPolygon(XP, YP, XP.length);

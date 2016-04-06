@@ -16,9 +16,9 @@ public class RunPhysicsDemo {
         maxWidth = JEasyFrame.SCREEN.width;
         maxHeight = JEasyFrame.SCREEN.height;
         double ratio = maxWidth/maxHeight;
-        worldWidth = 100*ratio;
+        worldWidth = 500*ratio;
         worldHeight = 100;
-        World world = new World(worldWidth,100);
+        World world = new World(worldWidth,500);
         View view = new View(world, maxWidth, maxHeight);
         JEasyFrame frame = new JEasyFrame(view, "Basic Physics Engine");
         frame.setSize(maxWidth, maxHeight);
@@ -28,39 +28,36 @@ public class RunPhysicsDemo {
     }
 
     public static void setup(World world, View view) {
-        GameObject obj = new GameObject(new Vector2D(50,80));
-        obj.setShape(new Circle(obj, 1));
-        obj.setVelocity(new Vector2D(-4, 0));
-        obj.mass = 10;
-        RigidBodyImproved b = new RigidBodyImproved(obj);
-        obj.addRigidBody(b);
-        world.addGameObject(obj);
-
-
-        GameObject obj2 = new GameObject(new Vector2D(50,50));
-        obj2.setShape(new Circle(obj2, 2));
-        obj2.mass = 10000000000000.0;
-        RigidBodyImproved b2 = new RigidBodyImproved(obj2);
-        obj2.addRigidBody(b2);
+        GameObject obj2 = new GameObject(new Vector2D(100,100));
+        obj2.setShape(new Circle(obj2, 20));
+        obj2.mass = 5000000000000000.0;
+        //RigidBodyImproved b2 = new RigidBodyImproved(obj2);
+        //obj2.addRigidBody(b2);
         world.addGameObject(obj2);
 
-        GameObject obj99 = new GameObject(new Vector2D(50,30));
-        obj99.setShape(new Circle(obj99, 1));
-        obj99.setVelocity(new Vector2D(-5, 0));
+        GameObject obj4 = new GameObject(new Vector2D(300,300));
+        obj4.setShape(new Circle(obj2, 20));
+        obj4.mass = 5000000000000000.0;
+        //RigidBodyImproved b4 = new RigidBodyImproved(obj4);
+        //obj4.addRigidBody(b4);
+        world.addGameObject(obj4);
+
+        /*GameObject obj99 = new GameObject(new Vector2D(250,300));
+        obj99.setShape(new Circle(obj99, 5));
+        obj99.setVelocity(new Vector2D(-25, 0));
         obj99.mass = 10;
         RigidBodyImproved b99 = new RigidBodyImproved(obj99);
         obj99.addRigidBody(b99);
-        world.addGameObject(obj99);
-
-
-        Ball ball = new Ball(obj);
-        view.addObjectView(ball);
+        world.addGameObject(obj99);*/
 
         Ball ball2 = new Ball(obj2);
         view.addObjectView(ball2);
 
-        Ball ball99 = new Ball(obj99);
-        view.addObjectView(ball99);
+        Ball ball4 = new Ball(obj4);
+        view.addObjectView(ball4);
+
+        //Ball ball99 = new Ball(obj99);
+        //view.addObjectView(ball99);
 
         GameObject obj3 = new GameObject(new Vector2D(10,50));
         obj3.setShape(new Circle(obj3, 1));
@@ -76,7 +73,7 @@ public class RunPhysicsDemo {
 
 
         //make da barriers - bottom
-        AnchoredBarrier_StraightLine bar1 = new AnchoredBarrier_StraightLine(0,2,worldWidth, 2);
+        /*AnchoredBarrier_StraightLine bar1 = new AnchoredBarrier_StraightLine(0,2,worldWidth, 2);
         BarrierView bar1View = new BarrierView(bar1);
         world.addBarrier(bar1);
         view.addObjectView(bar1View);
@@ -124,11 +121,14 @@ public class RunPhysicsDemo {
             }
             lastTime = currentTime;
             delta = delta/World.NUM_EULER_UPDATES_PER_SCREEN_REFRESH;
-            for (ObjectView objectView : v.objectViews) {
-                if (objectView instanceof GameObjectView) {
-                    ((GameObjectView) objectView).notificationOfNewTimeStep(delta);
+            synchronized (v.objectViews) {
+                for (ObjectView objectView : v.objectViews) {
+                    if (objectView instanceof GameObjectView) {
+                        ((GameObjectView) objectView).notificationOfNewTimeStep(delta);
+                    }
                 }
             }
+
             w.update(delta);
             v.repaint();
             try {

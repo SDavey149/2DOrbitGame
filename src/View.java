@@ -51,7 +51,9 @@ public class View extends JComponent {
         for (ObjectView objView : objectViews) {
             objView.draw(g, xScale, yScale);
         }
-        objectViews.addAll(pending);
+        synchronized (objectViews) {
+            objectViews.addAll(pending);
+        }
         pending.clear();
     }
 

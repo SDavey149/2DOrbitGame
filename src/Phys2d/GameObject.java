@@ -7,8 +7,8 @@ public class GameObject {
     private Vector2D position;
     private Vector2D velocity;
     private Vector2D acceleration;
+    private Vector2D rotation;
     private Shape shape;
-    private double rotation;
     public double mass;
     private Body body;
     public World world;
@@ -16,9 +16,9 @@ public class GameObject {
     public GameObject(Vector2D pos) {
         position = pos;
         this.body = new Body(this);
-        velocity = new Vector2D(0,0);
-        acceleration = new Vector2D(0,0);
-        this.rotation = 0;
+        velocity = new Vector2D();
+        acceleration = new Vector2D();
+        rotation = new Vector2D(1,0);
     }
 
     public void setWorld(World w) {
@@ -33,12 +33,12 @@ public class GameObject {
         return shape;
     }
 
-    public double getRotation() {
+    public Vector2D getRotation() {
         return rotation;
     }
 
-    public void setRotation(double theta) {
-        rotation = theta;
+    public void rotate(double theta) {
+        rotation.rotate(theta);
     }
 
     public Vector2D getPosition() {
@@ -92,8 +92,5 @@ public class GameObject {
         acceleration = acc;
     }
 
-    public Vector2D getDirection() {
-        return new Vector2D(Math.cos(rotation), Math.sin(rotation));
-    }
 
 }

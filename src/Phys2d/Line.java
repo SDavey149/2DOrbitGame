@@ -48,7 +48,8 @@ public class Line extends Shape {
         double startX = object.getPosition().x - length/2;
         double startY = object.getPosition().y;
         Vector2D start = new Vector2D(startX, startY);
-        double rotation = object.getRotation();
+        Vector2D rotationVec = object.getRotation();
+        double rotation = Math.atan2(rotationVec.y, rotationVec.x);
         if (rotation == 0) {
             return start;
         }
@@ -65,7 +66,8 @@ public class Line extends Shape {
         double endX = object.getPosition().x + length/2;
         double endY = object.getPosition().y;
         Vector2D end = new Vector2D(endX, endY);
-        double rotation = object.getRotation();
+        Vector2D rotationVec = object.getRotation();
+        double rotation = Math.atan2(rotationVec.y, rotationVec.x);
         if (rotation == 0) {
             return end;
         }
