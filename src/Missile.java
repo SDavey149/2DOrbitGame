@@ -1,6 +1,7 @@
 import Phys2d.Circle;
 import Phys2d.GameObject;
 import Phys2d.RigidBodyImproved;
+import Phys2d.Vector2D;
 import utilities.JEasyFrame;
 
 import java.awt.*;
@@ -12,17 +13,31 @@ public class Missile extends GameObjectView {
     Circle circle;
     Color color;
     RigidBodyImproved rgb;
+    private double fuel;
+    private double missileMass;
+    private static int MISSILE_THRUST = 10;
+    private static int FUEL_USE_PER_SECOND = 1;
 
-    public Missile(GameObject obj) {
+    public Missile(GameObject obj, int initialFuelSize) {
         super(obj);
         circle = (Circle)obj.getShape();
         color = Color.RED;
+        missileMass = obj.mass;
         rgb = (RigidBodyImproved) obj.getBody();
+        fuel = initialFuelSize;
     }
 
     @Override
     public void notificationOfNewTimeStep(double delta) {
-        //rgb.addForce(direction of missile);
+        object.mass = missileMass + fuel;
+        if (fuel > 0) {
+            Vector2D direction = new Vector2D(object.getVelocity());
+            direction.normalise();
+            direction.mult(MISSILE_THRUST);
+            rgb.addForce(direction);
+            fuel -= FUEL_USE_PER_SECOND*delta;
+        }
+
     }
 
     @Override

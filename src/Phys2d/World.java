@@ -92,6 +92,15 @@ public class World {
         }
 
         //check collisions
+        for (int n=0;n<gameObjects.size();n++) {
+            for (int m=0;m<n;m++) {// avoids double check by requiring m<n
+                Shape s1 = gameObjects.get(n).getShape();
+                Shape s2 = gameObjects.get(m).getShape();
+                if (s1.overlaps(s2)) {
+                    System.out.println("COLLIDED MUTHAFUGGA");
+                }
+            }
+        }
 
     }
 

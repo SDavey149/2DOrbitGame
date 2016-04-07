@@ -9,7 +9,7 @@ public class BasicKeyListener extends KeyAdapter {
      * Significant changes applied:
      */
     private static boolean rotateRightKeyPressed, rotateLeftKeyPressed, upKeyPressed, downKeyPressed,
-    firePressed;
+    firePressed, stabiliserEnabled;
 
     public static boolean isRotateRightKeyPressed() {
         return rotateRightKeyPressed;
@@ -27,6 +27,10 @@ public class BasicKeyListener extends KeyAdapter {
 
     public static boolean isFireButtonPressed() {
         return firePressed;
+    }
+
+    public static boolean isStabiliserEnabled() {
+        return stabiliserEnabled;
     }
 
 
@@ -48,6 +52,8 @@ public class BasicKeyListener extends KeyAdapter {
             case KeyEvent.VK_SPACE:
                 firePressed = true;
                 break;
+            case KeyEvent.VK_S:
+                stabiliserEnabled = !stabiliserEnabled;
 
         }
     }

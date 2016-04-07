@@ -12,13 +12,15 @@ public class GameObject {
     public double mass;
     private Body body;
     public World world;
+    private CollideCallback collider;
 
-    public GameObject(Vector2D pos) {
+    public GameObject(Vector2D pos, CollideCallback collider) {
         position = pos;
         this.body = new Body(this);
         velocity = new Vector2D();
         acceleration = new Vector2D();
         rotation = new Vector2D(1,0);
+        this.collider = collider;
     }
 
     public void setWorld(World w) {
@@ -90,6 +92,10 @@ public class GameObject {
 
     public void setAcceleration(Vector2D acc) {
         acceleration = acc;
+    }
+
+    public void collided() {
+        collider.onCollide();
     }
 
 

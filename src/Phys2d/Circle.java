@@ -21,6 +21,7 @@ public class Circle extends Shape {
             Vector2D vecFrom1to2 = Vector2D.minus(otherObj.getPosition(), object.getPosition());
             boolean movingTowardsEachOther = Vector2D.minus(otherObj.getVelocity(),
                     object.getVelocity()).scalarProduct(vecFrom1to2)<0;
+
             return vecFrom1to2.mag()<getRadius()+otherShape.getRadius() && movingTowardsEachOther;
         }
 

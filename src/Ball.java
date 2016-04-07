@@ -25,11 +25,10 @@ public class Ball extends GameObjectView {
 
     @Override
     public void draw(Graphics2D g, double xScreenScale, double yScreenScale) {
-
         int x = (int) (object.getPosition().x*xScreenScale);
         int y = (int) (JEasyFrame.SCREEN.height-object.getPosition().y*yScreenScale);
         g.setColor(color);
-        double radius = circle.getRadius()*xScreenScale;
+        double radius = circle.getRadius()*yScreenScale;
         g.fillOval((int)(x - radius), (int)(y - radius), (int)(2 * radius), (int)(2 * radius));
     }
 

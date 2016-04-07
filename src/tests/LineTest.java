@@ -30,7 +30,7 @@ public class LineTest extends TestCase {
         assertEquals(new Vector2D(10.0,20.0), line1.startOfLine());
         assertEquals(new Vector2D(20.0,20.0), line1.endOfLine());
 
-        //object.setRotation(Math.PI/2);
+        object.rotate(Math.PI/2);
         assertEquals(new Vector2D(15.0, 15.0), line1.startOfLine());
         assertEquals(new Vector2D(15.0, 25.0), line1.endOfLine());
 

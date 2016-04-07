@@ -30,13 +30,13 @@ public class RunPhysicsDemo {
     public static void setup(World world, View view) {
         GameObject obj2 = new GameObject(new Vector2D(100,100));
         obj2.setShape(new Circle(obj2, 20));
-        obj2.mass = 5000000000000000.0;
+        obj2.mass = 1000000000000000.0;
         //RigidBodyImproved b2 = new RigidBodyImproved(obj2);
         //obj2.addRigidBody(b2);
         world.addGameObject(obj2);
 
         GameObject obj4 = new GameObject(new Vector2D(300,300));
-        obj4.setShape(new Circle(obj2, 20));
+        obj4.setShape(new Circle(obj4, 20));
         obj4.mass = 5000000000000000.0;
         //RigidBodyImproved b4 = new RigidBodyImproved(obj4);
         //obj4.addRigidBody(b4);
@@ -59,15 +59,12 @@ public class RunPhysicsDemo {
         //Ball ball99 = new Ball(obj99);
         //view.addObjectView(ball99);
 
-        GameObject obj3 = new GameObject(new Vector2D(10,50));
-        obj3.setShape(new Circle(obj3, 1));
-        //obj3.setRotation(Math.PI/2);
+        GameObject obj3 = new GameObject(new Vector2D(10,300));
+        obj3.setShape(new Circle(obj3, 6));
         obj3.mass = 4500;
-        obj3.world = world;
         RigidBodyImproved rgb3 = new RigidBodyImproved(obj3);
-        rgb3.useGravity(false);
         obj3.addRigidBody(rgb3);
-        Ship ship = new Ship(obj3, world, view);
+        Ship ship = new Ship(obj3, world, view, 100000);
         view.addObjectView(ship);
         world.addGameObject(obj3);
 
