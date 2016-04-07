@@ -1,7 +1,4 @@
-import Phys2d.Circle;
-import Phys2d.GameObject;
-import Phys2d.RigidBodyImproved;
-import Phys2d.Vector2D;
+import Phys2d.*;
 import utilities.JEasyFrame;
 
 import java.awt.*;
@@ -9,22 +6,31 @@ import java.awt.*;
 /**
  * Created by scottdavey on 06/04/2016.
  */
-public class Missile extends GameObjectView {
+public class Missile extends GameObjectView implements CollideCallback {
     Circle circle;
     Color color;
     RigidBodyImproved rgb;
     private double fuel;
     private double missileMass;
-    private static int MISSILE_THRUST = 10;
+    private static int MISSILE_THRUST = 1000;
     private static int FUEL_USE_PER_SECOND = 1;
 
-    public Missile(GameObject obj, int initialFuelSize) {
-        //super(obj);
-        circle = (Circle)obj.getShape();
+    public Missile(World world, Vector2D pos, Vector2D initialDirection, int initialFuelSize) {
+        GameObject bullet = new GameObject(pos, this);
+        bullet.setShape(new Circle(bullet, 1));
+        initialDirection.mult(MISSILE_THRUST);
+        bullet.mass = 1;
+        rgb = new RigidBodyImproved(bullet);
+        bullet.addRigidBody(rgb);
+        rgb.addForce(initialDirection);
+        object = bullet;
+        world.addGameObject(object);
+
+        circle = (Circle)object.getShape();
         color = Color.RED;
-        missileMass = obj.mass;
-        rgb = (RigidBodyImproved) obj.getBody();
+        missileMass = object.mass;
         fuel = initialFuelSize;
+        System.out.println("missle spawned at: " + pos);
     }
 
     @Override
@@ -33,7 +39,7 @@ public class Missile extends GameObjectView {
         if (fuel > 0) {
             Vector2D direction = new Vector2D(object.getVelocity());
             direction.normalise();
-            direction.mult(MISSILE_THRUST);
+            direction.mult(MISSILE_THRUST*delta);
             rgb.addForce(direction);
             fuel -= FUEL_USE_PER_SECOND*delta;
         }
@@ -52,5 +58,10 @@ public class Missile extends GameObjectView {
 
     public void setColor(Color c) {
         color = c;
+    }
+
+    @Override
+    public void onCollide() {
+
     }
 }

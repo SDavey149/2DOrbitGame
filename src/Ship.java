@@ -56,20 +56,11 @@ public class Ship extends GameObjectView implements CollideCallback{
             object.rotate(Math.PI/6 * delta);
         }
         if (BasicKeyListener.isFireButtonPressed()) {
-            /*GameObject bullet = new GameObject(new Vector2D(object.getPosition()));
-            bullet.setShape(new Circle(bullet, 0.5));
-            Vector2D bulletForce = new Vector2D(object.getRotation());
-            bulletForce.mult(10);
-            bullet.mass = 1;
-            RigidBodyImproved rgb = new RigidBodyImproved(bullet);
-            bullet.addRigidBody(rgb);
-            //rgb.addForce(bulletForce);
-
-            world.addGameObject(bullet);
-
-            Missile ball = new Missile(bullet, 2);
+            System.out.println("ships pos: " + object.getPosition());
+            Vector2D missileDirection = object.getRotation();
+            Missile ball = new Missile(world, new Vector2D(object.getPosition()), new Vector2D(missileDirection), 5);
             ball.setColor(Color.GREEN);
-            view.addObjectView(ball);*/
+            view.addObjectView(ball);
 
         }
         if (BasicKeyListener.isStabiliserEnabled()) {
