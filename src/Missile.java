@@ -19,7 +19,7 @@ public class Missile extends GameObjectView {
     private static int FUEL_USE_PER_SECOND = 1;
 
     public Missile(GameObject obj, int initialFuelSize) {
-        super(obj);
+        //super(obj);
         circle = (Circle)obj.getShape();
         color = Color.RED;
         missileMass = obj.mass;

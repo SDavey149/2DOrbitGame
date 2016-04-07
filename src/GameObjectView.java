@@ -8,10 +8,6 @@ import java.awt.*;
 public abstract class GameObjectView implements ObjectView {
     GameObject object;
 
-    public GameObjectView(GameObject object) {
-        this.object = object;
-    }
-
     public abstract void notificationOfNewTimeStep(double delta);
 
 }

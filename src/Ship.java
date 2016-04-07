@@ -9,7 +9,7 @@ import java.awt.image.PackedColorModel;
 /**
  * Created by scottdavey on 08/03/2016.
  */
-public class Ship extends GameObjectView {
+public class Ship extends GameObjectView implements CollideCallback{
 
     private static int THRUST_FORCE = 440000;
     private static int FUEL_RATE_PER_SECOND = 100000;
@@ -22,16 +22,15 @@ public class Ship extends GameObjectView {
     private double fuel;
     private double stabilityPower;
 
-    public Ship(GameObject obj, World world, View view, int initialFuel) {
-        super(obj);
-        //check this
-        GameObject obj3 = new GameObject(new Vector2D(10,300));
+    public Ship(World world, View view, int initialFuel) {
+        GameObject obj3 = new GameObject(new Vector2D(10,300), this);
         obj3.setShape(new Circle(obj3, 6));
         obj3.mass = 4500;
-        RigidBodyImproved rgb3 = new RigidBodyImproved(obj3);
-        obj3.addRigidBody(rgb3);
-        rgb = (RigidBodyImproved) obj.getBody();
+        rgb = new RigidBodyImproved(obj3);
+        obj3.addRigidBody(rgb);
+        object = obj3;
         this.world = world;
+        this.world.addGameObject(object);
         this.view = view;
         this.initialFuel = initialFuel;
         fuel = initialFuel;
@@ -57,7 +56,7 @@ public class Ship extends GameObjectView {
             object.rotate(Math.PI/6 * delta);
         }
         if (BasicKeyListener.isFireButtonPressed()) {
-            GameObject bullet = new GameObject(new Vector2D(object.getPosition()));
+            /*GameObject bullet = new GameObject(new Vector2D(object.getPosition()));
             bullet.setShape(new Circle(bullet, 0.5));
             Vector2D bulletForce = new Vector2D(object.getRotation());
             bulletForce.mult(10);
@@ -70,7 +69,7 @@ public class Ship extends GameObjectView {
 
             Missile ball = new Missile(bullet, 2);
             ball.setColor(Color.GREEN);
-            view.addObjectView(ball);
+            view.addObjectView(ball);*/
 
         }
         if (BasicKeyListener.isStabiliserEnabled()) {
@@ -144,4 +143,8 @@ public class Ship extends GameObjectView {
         return fuel/initialFuel * 100;
     }
 
+    @Override
+    public void onCollide() {
+        System.out.println("Ship collided");
+    }
 }

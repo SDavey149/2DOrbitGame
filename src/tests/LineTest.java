@@ -25,7 +25,7 @@ public class LineTest extends TestCase {
     }
 
     public void testLine() throws Exception {
-        GameObject object = new GameObject(new Vector2D(15,20));
+        GameObject object = new GameObject(new Vector2D(15,20), null);
         Line line1 = new Line(object, 10, 1);
         assertEquals(new Vector2D(10.0,20.0), line1.startOfLine());
         assertEquals(new Vector2D(20.0,20.0), line1.endOfLine());

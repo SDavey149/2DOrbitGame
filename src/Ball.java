@@ -1,5 +1,4 @@
-import Phys2d.Circle;
-import Phys2d.GameObject;
+import Phys2d.*;
 import utilities.JEasyFrame;
 
 import java.awt.*;
@@ -7,14 +6,21 @@ import java.awt.*;
 /**
  * Created by scottdavey on 02/03/2016.
  */
-public class Ball extends GameObjectView {
+public class Ball extends GameObjectView implements CollideCallback {
 
     Circle circle;
     Color color;
 
-    public Ball(GameObject obj) {
-        super(obj);
-        circle = (Circle)obj.getShape();
+    public Ball(World world, double mass, Vector2D pos, double radius) {
+        GameObject obj2 = new GameObject(pos, this);
+        obj2.setShape(new Circle(obj2, radius));
+        obj2.mass = mass;
+        //RigidBodyImproved b2 = new RigidBodyImproved(obj2);
+        //obj2.addRigidBody(b2);
+        object = obj2;
+        world.addGameObject(object);
+
+        circle = (Circle)object.getShape();
         color = Color.RED;
     }
 
@@ -34,5 +40,10 @@ public class Ball extends GameObjectView {
 
     public void setColor(Color c) {
         color = c;
+    }
+
+    @Override
+    public void onCollide() {
+        System.out.println("planet collided");
     }
 }

@@ -28,19 +28,12 @@ public class RunPhysicsDemo {
     }
 
     public static void setup(World world, View view) {
-        GameObject obj2 = new GameObject(new Vector2D(100,100));
-        obj2.setShape(new Circle(obj2, 20));
-        obj2.mass = 1000000000000000.0;
-        //RigidBodyImproved b2 = new RigidBodyImproved(obj2);
-        //obj2.addRigidBody(b2);
-        world.addGameObject(obj2);
-
-        GameObject obj4 = new GameObject(new Vector2D(300,300));
+        /*GameObject obj4 = new GameObject(new Vector2D(300,300));
         obj4.setShape(new Circle(obj4, 20));
         obj4.mass = 5000000000000000.0;
         //RigidBodyImproved b4 = new RigidBodyImproved(obj4);
         //obj4.addRigidBody(b4);
-        world.addGameObject(obj4);
+        world.addGameObject(obj4);*/
 
         /*GameObject obj99 = new GameObject(new Vector2D(250,300));
         obj99.setShape(new Circle(obj99, 5));
@@ -50,23 +43,19 @@ public class RunPhysicsDemo {
         obj99.addRigidBody(b99);
         world.addGameObject(obj99);*/
 
-        Ball ball2 = new Ball(obj2);
+        Ball ball2 = new Ball(world, 1000000000000000.0, new Vector2D(100,100), 20);
         view.addObjectView(ball2);
 
-        Ball ball4 = new Ball(obj4);
+        Ball ball4 = new Ball(world, 5000000000000000.0, new Vector2D(300,300), 20);
         view.addObjectView(ball4);
 
         //Ball ball99 = new Ball(obj99);
         //view.addObjectView(ball99);
 
-        GameObject obj3 = new GameObject(new Vector2D(10,300));
-        obj3.setShape(new Circle(obj3, 6));
-        obj3.mass = 4500;
-        RigidBodyImproved rgb3 = new RigidBodyImproved(obj3);
-        obj3.addRigidBody(rgb3);
-        Ship ship = new Ship(obj3, world, view, 100000);
+
+        Ship ship = new Ship(world, view, 100000);
         view.addObjectView(ship);
-        world.addGameObject(obj3);
+        //world.addGameObject(obj3);
 
 
         //make da barriers - bottom

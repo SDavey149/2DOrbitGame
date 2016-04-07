@@ -7,7 +7,7 @@ import Phys2d.Vector2D;
 
 /**
  * Created by scottdavey on 02/04/2016.
- */
+
 public class CircleTest extends TestCase {
 
     private GameObject object1;
@@ -47,4 +47,4 @@ public class CircleTest extends TestCase {
     public void testGetRadius() throws Exception {
         assertEquals(true, true);
     }
-}
+}*/

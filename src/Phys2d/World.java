@@ -94,10 +94,13 @@ public class World {
         //check collisions
         for (int n=0;n<gameObjects.size();n++) {
             for (int m=0;m<n;m++) {// avoids double check by requiring m<n
-                Shape s1 = gameObjects.get(n).getShape();
-                Shape s2 = gameObjects.get(m).getShape();
+                GameObject g1 = gameObjects.get(n);
+                GameObject g2 = gameObjects.get(m);
+                Shape s1 = g1.getShape();
+                Shape s2 = g2.getShape();
                 if (s1.overlaps(s2)) {
-                    System.out.println("COLLIDED MUTHAFUGGA");
+                    g1.collided();
+                    g2.collided();
                 }
             }
         }
