@@ -13,7 +13,7 @@ public class Ship extends GameObjectView implements CollideCallback{
 
     private static int THRUST_FORCE = 440000;
     private static int FUEL_RATE_PER_SECOND = 100000;
-    private static int MAX_STABILITY_FORCE = 400000;
+    private static int MAX_STABILITY_FORCE = 2500000;
 
     private RigidBodyImproved rgb;
     private World world;
@@ -47,35 +47,30 @@ public class Ship extends GameObjectView implements CollideCallback{
             fuel -= FUEL_RATE_PER_SECOND * delta;
         }
         if (BasicKeyListener.isRotateLeftKeyPressed()) {
-            object.rotate(-Math.PI / 6 * delta);
-            Vector2D rotation = object.getRotation();
-            System.out.println("rotation vec: " + rotation);
-            System.out.println("angle is: " + Math.atan2(rotation.y, rotation.x));
+            object.rotate(-2 * Math.PI * delta);
         }
         else if (BasicKeyListener.isRotateRightKeyPressed()) {
-            object.rotate(Math.PI/6 * delta);
+            object.rotate(2 * Math.PI * delta);
         }
         if (BasicKeyListener.isFireButtonPressed()) {
             System.out.println("ships pos: " + object.getPosition());
             Vector2D missileDirection = object.getRotation();
-            Missile ball = new Missile(world, new Vector2D(object.getPosition()), new Vector2D(missileDirection), 5);
+            Missile ball = new Missile(world, new Vector2D(object.getPosition()), new Vector2D(missileDirection),
+                    new Vector2D(object.getVelocity()), 5);
             ball.setColor(Color.GREEN);
             view.addObjectView(ball);
 
         }
         if (BasicKeyListener.isStabiliserEnabled()) {
             Vector2D stabiliserForce = getStabiliserForce(delta);
-            stabilityPower += 500000 * delta;
+            /*stabilityPower += 10000000 * delta;
             double magNeeded = stabiliserForce.mag();
             if (stabilityPower > magNeeded) {
                 stabilityPower = magNeeded;
-            }
-            if (stabilityPower > MAX_STABILITY_FORCE) {
-                stabilityPower = MAX_STABILITY_FORCE;
-            }
+            }*/
             Vector2D stabilityDir = new Vector2D(stabiliserForce);
-            stabilityDir.normalise();
-            stabilityDir.mult(stabilityPower);
+            //stabilityDir.normalise();
+            //stabilityDir.mult(stabilityPower);
             rgb.addForce(stabilityDir);
         } else {
             stabilityPower = 0;

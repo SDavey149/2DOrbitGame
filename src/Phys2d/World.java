@@ -14,15 +14,20 @@ public class World {
     private double height;
 
     public static final int DELAY = 20;
-    public static final int NUM_EULER_UPDATES_PER_SCREEN_REFRESH=1;
+    public static final int NUM_EULER_UPDATES_PER_SCREEN_REFRESH=10;
     // estimate for time between two frames in seconds
     public static final double DELTA_T = DELAY / 1000.0 / NUM_EULER_UPDATES_PER_SCREEN_REFRESH ;
+    public static final double MIN_GRAVITATIONAL_MASS = 100000000.0;
 
     List<GameObject> gameObjects;
+    List<GameObject> pending;
+    List<GameObject> pendingRemoval;
     List<AnchoredBarrier> barriers;
 
     public World(double width, double height) {
         gameObjects = new ArrayList<>(100);
+        pending = new ArrayList<>(10);
+        pendingRemoval = new ArrayList<>(10);
         barriers = new ArrayList<>(10);
         this.width = width;
         this.height = height;
@@ -49,7 +54,7 @@ public class World {
         Vector2D force = new Vector2D(0,0);
         if (obj.hasRigidBody()) {
             for (GameObject o : gameObjects) {
-                if (o != obj) {
+                if (o.mass > MIN_GRAVITATIONAL_MASS && o != obj) {
                     //make a copy
                     Vector2D position = new Vector2D(pos);
                     position.mult(-1);
@@ -105,6 +110,11 @@ public class World {
             }
         }
 
+        //remove pending
+        for (GameObject obj : pendingRemoval) {
+            gameObjects.remove(obj);
+        }
+
     }
 
     public List<GameObject> getGameObjects() {
@@ -112,4 +122,8 @@ public class World {
     }
 
     public List<AnchoredBarrier> getBarriers() { return barriers; }
+
+    public void destroy(GameObject object) {
+        pendingRemoval.add(object);
+    }
 }
