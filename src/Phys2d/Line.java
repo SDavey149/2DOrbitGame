@@ -17,20 +17,12 @@ public class Line extends Shape {
     @Override
     public boolean overlaps(Shape shape) {
         if (shape instanceof Circle) {
-
+            return overlapWith((Circle)shape);
         }
         return false;
     }
 
     private boolean overlapWith(Circle circle) {
-        /*Vector2D ap=Vector2D.minus(circleCentre, startPos);
-		double distOnCorrectSideOfBarrierToCentre=ap.scalarProduct(getUnitNormal());
-		double distAlongBarrier=ap.scalarProduct(getUnitTangent());
-		// Note barrierDepth is type Double declared in constructor.
-		// barrierDepth null indicates infinite barrierDepth
-		// barrierLength is ||AB||, declared in constructor.
-		return distOnCorrectSideOfBarrierToCentre<=circleRadius && (barrierDepth==null || distOnCorrectSideOfBarrierToCentre>=-(barrierDepth+circleRadius))
-				&& distAlongBarrier>=0 && distAlongBarrier<=barrierLength;*/
         Vector2D start = startOfLine();
         Vector2D tangent = Vector2D.minus(endOfLine(), start);
         double length = tangent.mag();
