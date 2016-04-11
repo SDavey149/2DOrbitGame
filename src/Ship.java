@@ -11,40 +11,31 @@ import java.awt.image.PackedColorModel;
  */
 public class Ship extends GameObjectView implements CollideCallback{
 
-    private static int THRUST_FORCE = 440000;
-    private static int FUEL_RATE_PER_SECOND = 100000;
-    private static int MAX_STABILITY_FORCE = 2500000;
+    private static int THRUST_FORCE = 600000;
 
     private RigidBodyImproved rgb;
     private World world;
     private View view;
-    private int initialFuel;
-    private double fuel;
-    private double stabilityPower;
 
-    public Ship(World world, View view, int initialFuel) {
+    public Ship(World world, View view) {
         GameObject obj3 = new GameObject(new Vector2D(10,300), this);
         obj3.setShape(new Circle(obj3, 6));
         obj3.mass = 4500;
         rgb = new RigidBodyImproved(obj3);
+        rgb.useGravity(false);
         obj3.addRigidBody(rgb);
         object = obj3;
         this.world = world;
         this.world.addGameObject(object);
         this.view = view;
-        this.initialFuel = initialFuel;
-        fuel = initialFuel;
-        stabilityPower = 0;
     }
 
     @Override
     public void notificationOfNewTimeStep(double delta) {
-        if (BasicKeyListener.isMoveUpPressed() && fuel > 0) {
-            rgb.addForce(new Vector2D(0, 1 * THRUST_FORCE));
-            fuel -= FUEL_RATE_PER_SECOND * delta;
-        } else if (BasicKeyListener.isMoveDownPressed() && fuel > 0) {
-            rgb.addForce(new Vector2D(0, -1*THRUST_FORCE));
-            fuel -= FUEL_RATE_PER_SECOND * delta;
+        if (BasicKeyListener.isMoveUpPressed()) {
+            rgb.addForce(new Vector2D(0, THRUST_FORCE));
+        } else if (BasicKeyListener.isMoveDownPressed()) {
+            rgb.addForce(new Vector2D(0, -THRUST_FORCE));
         }
         if (BasicKeyListener.isRotateLeftKeyPressed()) {
             object.rotate(-2 * Math.PI * delta);
@@ -60,20 +51,6 @@ public class Ship extends GameObjectView implements CollideCallback{
             ball.setColor(Color.GREEN);
             view.addObjectView(ball);
 
-        }
-        if (BasicKeyListener.isStabiliserEnabled()) {
-            Vector2D stabiliserForce = getStabiliserForce(delta);
-            /*stabilityPower += 10000000 * delta;
-            double magNeeded = stabiliserForce.mag();
-            if (stabilityPower > magNeeded) {
-                stabilityPower = magNeeded;
-            }*/
-            Vector2D stabilityDir = new Vector2D(stabiliserForce);
-            //stabilityDir.normalise();
-            //stabilityDir.mult(stabilityPower);
-            rgb.addForce(stabilityDir);
-        } else {
-            stabilityPower = 0;
         }
 
 
@@ -123,10 +100,6 @@ public class Ship extends GameObjectView implements CollideCallback{
         g.setColor(Color.RED);
         double radius = circle.getRadius()*xScreenScale;
         g.drawOval((int) (x - radius), (int) (y - radius), (int) (2 * radius), (int) (2 * radius));
-    }
-
-    public double getPercentageFuelRemaining() {
-        return fuel/initialFuel * 100;
     }
 
     @Override

@@ -53,7 +53,7 @@ public class RunPhysicsDemo {
         //view.addObjectView(ball99);
 
 
-        Ship ship = new Ship(world, view, 100000);
+        Ship ship = new Ship(world, view);
         view.addObjectView(ship);
         //world.addGameObject(obj3);
 
