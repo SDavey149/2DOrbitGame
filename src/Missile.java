@@ -1,5 +1,6 @@
 import Phys2d.*;
 import javafx.util.Pair;
+import org.omg.CORBA.ORB;
 import utilities.JEasyFrame;
 
 import java.awt.*;
@@ -18,14 +19,14 @@ public class Missile extends GameObjectView implements CollideCallback {
     private static int MISSILE_THRUST = 20000;
     private static int FUEL_USE_PER_SECOND = 1;
     public static final int ORBIT_STEP_INTERVAL = 2;
-    public static final int MAX_STEPS_RECORDED = 120;
+    public static final int MAX_STEPS_RECORDED = 200;
     public static final int TIME_TO_LIVE = 300;
     private List<Vector2D> orbitTrace;
     private int orbitSteps;
     private int ttl;
     private World world;
 
-    public Missile(World world, Vector2D pos, Vector2D initialDirection, Vector2D initialVelocity, int initialFuelSize) {
+    public Missile(World world, Vector2D pos, Vector2D initialDirection, int initialFuelSize) {
         GameObject bullet = new GameObject(pos, this);
         bullet.setShape(new Circle(bullet, 0.4));
         initialDirection.mult(MISSILE_THRUST);
@@ -34,10 +35,9 @@ public class Missile extends GameObjectView implements CollideCallback {
         bullet.addRigidBody(rgb);
         rgb.addForce(initialDirection);
         object = bullet;
-        object.setVelocity(initialVelocity);
         this.world = world;
         this.world.addGameObject(object);
-
+        orbitSteps = ORBIT_STEP_INTERVAL;
         circle = (Circle)object.getShape();
         color = Color.RED;
         missileMass = object.mass;

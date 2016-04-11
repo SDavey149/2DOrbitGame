@@ -11,19 +11,20 @@ import java.awt.image.PackedColorModel;
  */
 public class Ship extends GameObjectView implements CollideCallback{
 
-    private static int THRUST_FORCE = 600000;
+    private final static int SPEED = 100;
+    private final static int FIRE_TIMEOUT = 50;
 
     private RigidBodyImproved rgb;
     private World world;
     private View view;
     final int[] XP = { -2, 0, 2, 0 };
     final int[] YP = { 2, -2, 2, 0 };
-    final double SCALE = 10; //radius
+    int lastFired;
 
-    public Ship(World world, View view) {
-        GameObject obj3 = new GameObject(new Vector2D(10,300), this);
-        obj3.setShape(new Circle(obj3, 6));
-        obj3.mass = 4500;
+    public Ship(World world, View view, Vector2D position, double radius) {
+        GameObject obj3 = new GameObject(position, this);
+        obj3.setShape(new Circle(obj3, radius));
+        obj3.mass = 1;
         rgb = new RigidBodyImproved(obj3);
         rgb.useGravity(false);
         obj3.addRigidBody(rgb);
@@ -31,51 +32,69 @@ public class Ship extends GameObjectView implements CollideCallback{
         this.world = world;
         this.world.addGameObject(object);
         this.view = view;
+        lastFired = 0;
     }
 
     @Override
     public void notificationOfNewTimeStep(double delta) {
+        controls(delta);
+    }
+
+    public void controls(double delta) {
         if (BasicKeyListener.isMoveUpPressed()) {
-            //rgb.addForce(new Vector2D(0, THRUST_FORCE));
-            object.getVelocity().set(0,100);
+            moveUp();
         } else if (BasicKeyListener.isMoveDownPressed()) {
-            //rgb.addForce(new Vector2D(0, -THRUST_FORCE));
-            object.getVelocity().set(0,-100);
+            moveDown();
         } else {
-            object.getVelocity().set(0,0);
+            rest();
         }
         if (BasicKeyListener.isRotateLeftKeyPressed()) {
-            object.rotate(-2 * Math.PI * delta);
+            rotateLeft(delta);
         }
         else if (BasicKeyListener.isRotateRightKeyPressed()) {
-            object.rotate(2 * Math.PI * delta);
+            rotateRight(delta);
         }
-        if (BasicKeyListener.isFireButtonPressed()) {
-            Vector2D missileDirection = object.getRotation();
-            Missile ball = new Missile(world, new Vector2D(object.getPosition()), new Vector2D(missileDirection),
-                    new Vector2D(object.getVelocity()), 5);
-            ball.setColor(Color.GREEN);
-            view.addObjectView(ball);
-
+        if (BasicKeyListener.isFireButtonPressed() && lastFired <= 0) {
+            fire();
+            lastFired = FIRE_TIMEOUT;
         }
-
+        lastFired--;
 
     }
 
-    public Vector2D getStabiliserForce(double delta) {
-        /**
-         * Force required to keep the ship stable against gravity
-         * Uses the equation (mv-mu)/t = F
-         */
-        Vector2D finalVel = new Vector2D();
-        Vector2D initialVel = new Vector2D(object.getVelocity());
+    public void moveUp() {
+        object.getVelocity().set(0,SPEED);
+    }
 
-        finalVel.mult(object.mass);
-        initialVel.mult(-object.mass); //negative ready for subtraction
-        finalVel.add(initialVel); //mv-mu
-        finalVel.divide(delta); //divide by time
-        return finalVel; //final force
+    public void moveDown() {
+        object.getVelocity().set(0,-SPEED);
+    }
 
+    public void rest() {
+        object.getVelocity().set(0,0);
+    }
+
+    public void rotateLeft(double delta) {
+        object.rotate(-2 * Math.PI * delta);
+    }
+
+    public void rotateRight(double delta) {
+        object.rotate(2 * Math.PI * delta);
+    }
+
+    public void fire() {
+        Vector2D missileDirection = object.getRotation();
+        Vector2D position = new Vector2D(object.getPosition());
+        double radius = ((Circle)(object.getShape())).getRadius();
+        //spawn it outside of ship, not sure why the radius must be /2, mismatch somewhere..
+        position.addScaled(missileDirection, (radius / 2) + 1);
+        Missile ball = new Missile(world, position, new Vector2D(missileDirection), 5);
+        ball.setColor(Color.GREEN);
+        view.addObjectView(ball);
+    }
+
+    public void rotate(double angle) {
+        object.rotate(angle);
     }
 
     @Override
@@ -83,24 +102,24 @@ public class Ship extends GameObjectView implements CollideCallback{
         int x = (int) (object.getPosition().x*xScreenScale);
         int y = (int) (JEasyFrame.SCREEN.height-object.getPosition().y*yScreenScale);
         g.setColor(Color.GREEN);
-
+        Circle circle = (Circle) object.getShape();
+        double radius = circle.getRadius()*Math.min(yScreenScale, xScreenScale);
         AffineTransform at = g.getTransform();
         g.translate(x, y);
         Vector2D rotation = new Vector2D(object.getRotation());
         g.rotate(Math.PI / 2 - Math.atan2(rotation.y, rotation.x));
-        g.scale(SCALE, SCALE);
+        g.scale(radius/2, radius/2);
         g.setColor(Color.GREEN);
         g.fillPolygon(XP, YP, XP.length);
         g.setTransform(at);
 
-        Circle circle = (Circle) object.getShape();
         g.setColor(Color.RED);
-        double radius = circle.getRadius()*xScreenScale;
         g.drawOval((int) (x - radius), (int) (y - radius), (int) (2 * radius), (int) (2 * radius));
     }
 
     @Override
     public void onCollide() {
-        System.out.println("Ship collided");
+        isActive = false;
+        world.destroy(object);
     }
 }

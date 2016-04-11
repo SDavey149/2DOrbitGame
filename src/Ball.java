@@ -35,7 +35,7 @@ public class Ball extends GameObjectView implements CollideCallback {
         int x = (int) (object.getPosition().x*xScreenScale);
         int y = (int) (JEasyFrame.SCREEN.height-object.getPosition().y*yScreenScale);
         g.setColor(color);
-        double radius = circle.getRadius()*yScreenScale;
+        double radius = circle.getRadius()*Math.min(yScreenScale, xScreenScale);
         g.fillOval((int)(x - radius), (int)(y - radius), (int)(2 * radius), (int)(2 * radius));
     }
 

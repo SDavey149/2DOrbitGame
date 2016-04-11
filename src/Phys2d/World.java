@@ -22,13 +22,11 @@ public class World {
     List<GameObject> gameObjects;
     List<GameObject> pending;
     List<GameObject> pendingRemoval;
-    List<AnchoredBarrier> barriers;
 
     public World(double width, double height) {
         gameObjects = new ArrayList<>(100);
-        pending = new ArrayList<>(10);
-        pendingRemoval = new ArrayList<>(10);
-        barriers = new ArrayList<>(10);
+        pending = new ArrayList<>();
+        pendingRemoval = new ArrayList<>();
         this.width = width;
         this.height = height;
     }
@@ -44,10 +42,6 @@ public class World {
     public void addGameObject(GameObject obj) {
         obj.setWorld(this);
         gameObjects.add(obj);
-    }
-
-    public void addBarrier(AnchoredBarrier bar) {
-        barriers.add(bar);
     }
 
     public Vector2D getGravitationalForce(GameObject obj, Vector2D pos, double mass) {
@@ -79,21 +73,7 @@ public class World {
         for (int i = 0; i < NUM_EULER_UPDATES_PER_SCREEN_REFRESH; i++) {
             for (GameObject obj : gameObjects) {
                 obj.update(delta);
-                /*for (AnchoredBarrier b : barriers) {
-                    if (obj.getShape() instanceof Circle) {
-                        Circle objShape = (Circle)obj.getShape();
-                        if (b.isCircleCollidingBarrier(obj.getPosition(), objShape.getRadius())) {
-                            //b.onCollide();
-                            Vector2D bouncedVel=b.calculateVelocityAfterACollision(obj.getPosition(), obj.getVelocity());
-                            obj.setVelocity(bouncedVel);
-                            //System.exit(1);
-                        }
-                    }
-
-
-                }*/
             }
-
         }
 
         //check collisions
@@ -120,8 +100,6 @@ public class World {
     public List<GameObject> getGameObjects() {
         return gameObjects;
     }
-
-    public List<AnchoredBarrier> getBarriers() { return barriers; }
 
     public void destroy(GameObject object) {
         pendingRemoval.add(object);
