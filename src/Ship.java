@@ -16,6 +16,9 @@ public class Ship extends GameObjectView implements CollideCallback{
     private RigidBodyImproved rgb;
     private World world;
     private View view;
+    final int[] XP = { -2, 0, 2, 0 };
+    final int[] YP = { 2, -2, 2, 0 };
+    final double SCALE = 10; //radius
 
     public Ship(World world, View view) {
         GameObject obj3 = new GameObject(new Vector2D(10,300), this);
@@ -33,9 +36,13 @@ public class Ship extends GameObjectView implements CollideCallback{
     @Override
     public void notificationOfNewTimeStep(double delta) {
         if (BasicKeyListener.isMoveUpPressed()) {
-            rgb.addForce(new Vector2D(0, THRUST_FORCE));
+            //rgb.addForce(new Vector2D(0, THRUST_FORCE));
+            object.getVelocity().set(0,100);
         } else if (BasicKeyListener.isMoveDownPressed()) {
-            rgb.addForce(new Vector2D(0, -THRUST_FORCE));
+            //rgb.addForce(new Vector2D(0, -THRUST_FORCE));
+            object.getVelocity().set(0,-100);
+        } else {
+            object.getVelocity().set(0,0);
         }
         if (BasicKeyListener.isRotateLeftKeyPressed()) {
             object.rotate(-2 * Math.PI * delta);
@@ -44,7 +51,6 @@ public class Ship extends GameObjectView implements CollideCallback{
             object.rotate(2 * Math.PI * delta);
         }
         if (BasicKeyListener.isFireButtonPressed()) {
-            System.out.println("ships pos: " + object.getPosition());
             Vector2D missileDirection = object.getRotation();
             Missile ball = new Missile(world, new Vector2D(object.getPosition()), new Vector2D(missileDirection),
                     new Vector2D(object.getVelocity()), 5);
@@ -77,11 +83,6 @@ public class Ship extends GameObjectView implements CollideCallback{
         int x = (int) (object.getPosition().x*xScreenScale);
         int y = (int) (JEasyFrame.SCREEN.height-object.getPosition().y*yScreenScale);
         g.setColor(Color.GREEN);
-        final int[] XP = { -2, 0, 2, 0 };
-        final int[] YP = { 2, -2, 2, 0 };
-        final int[] XPTHRUST = { -2, 0, 2, 0 };
-        final int[] YPTHRUST = { 2, 3, 2, 0 };
-        final double SCALE = 10; //radius
 
         AffineTransform at = g.getTransform();
         g.translate(x, y);
@@ -90,10 +91,6 @@ public class Ship extends GameObjectView implements CollideCallback{
         g.scale(SCALE, SCALE);
         g.setColor(Color.GREEN);
         g.fillPolygon(XP, YP, XP.length);
-        /*if (utilities.BasicKeyListener.isThrustKeyPressed()) {
-            g.setColor(Color.red);
-            g.fillPolygon(XPTHRUST, YPTHRUST, XPTHRUST.length);
-        }*/
         g.setTransform(at);
 
         Circle circle = (Circle) object.getShape();

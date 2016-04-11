@@ -11,6 +11,7 @@ public class Ball extends GameObjectView implements CollideCallback {
     Circle circle;
     Color color;
 
+
     public Ball(World world, double mass, Vector2D pos, double radius) {
         GameObject obj2 = new GameObject(pos, this);
         obj2.setShape(new Circle(obj2, radius));

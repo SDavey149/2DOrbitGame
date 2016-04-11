@@ -46,7 +46,7 @@ public class RunPhysicsDemo {
         Ball ball2 = new Ball(world, 1000000000000000.0, new Vector2D(100,100), 20);
         view.addObjectView(ball2);
 
-        Ball ball4 = new Ball(world, 5000000000000000.0, new Vector2D(300,300), 20);
+        Ball ball4 = new Ball(world, 5000000000000000.0, new Vector2D(300,300), 40);
         view.addObjectView(ball4);
 
         //Ball ball99 = new Ball(obj99);
@@ -108,13 +108,10 @@ public class RunPhysicsDemo {
             lastTime = currentTime;
             delta = delta/World.NUM_EULER_UPDATES_PER_SCREEN_REFRESH;
             synchronized (v.objectViews) {
-                for (ObjectView objectView : v.objectViews) {
-                    if (objectView instanceof GameObjectView) {
-                        ((GameObjectView) objectView).notificationOfNewTimeStep(delta);
-                    }
+                for (GameObjectView objectView : v.objectViews) {
+                    objectView.notificationOfNewTimeStep(delta);
                 }
             }
-
             w.update(delta);
             v.repaint();
             try {
