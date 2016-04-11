@@ -5,8 +5,8 @@ import Phys2d.World;
  * Created by scottdavey on 11/04/2016.
  */
 public class EnemyShip extends Ship {
-    public EnemyShip(World world, View view, Vector2D position, double radius) {
-        super(world, view, position, radius);
+    public EnemyShip(Game game, Vector2D position, double radius) {
+        super(game, position, radius);
     }
 
     @Override

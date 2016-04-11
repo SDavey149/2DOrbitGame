@@ -15,13 +15,12 @@ public class Ship extends GameObjectView implements CollideCallback{
     private final static int FIRE_TIMEOUT = 50;
 
     private RigidBodyImproved rgb;
-    private World world;
-    private View view;
+    private Game game;
     final int[] XP = { -2, 0, 2, 0 };
     final int[] YP = { 2, -2, 2, 0 };
     int lastFired;
 
-    public Ship(World world, View view, Vector2D position, double radius) {
+    public Ship(Game game, Vector2D position, double radius) {
         GameObject obj3 = new GameObject(position, this);
         obj3.setShape(new Circle(obj3, radius));
         obj3.mass = 1;
@@ -29,9 +28,8 @@ public class Ship extends GameObjectView implements CollideCallback{
         rgb.useGravity(false);
         obj3.addRigidBody(rgb);
         object = obj3;
-        this.world = world;
-        this.world.addGameObject(object);
-        this.view = view;
+        this.game = game;
+        this.game.getWorld().addGameObject(object);
         lastFired = 0;
     }
 
@@ -88,9 +86,9 @@ public class Ship extends GameObjectView implements CollideCallback{
         double radius = ((Circle)(object.getShape())).getRadius();
         //spawn it outside of ship, not sure why the radius must be /2, mismatch somewhere..
         position.addScaled(missileDirection, (radius / 2) + 1);
-        Missile ball = new Missile(world, position, new Vector2D(missileDirection), 5);
+        Missile ball = new Missile(game.getWorld(), position, new Vector2D(missileDirection), 5);
         ball.setColor(Color.GREEN);
-        view.addObjectView(ball);
+        game.getView().addObjectView(ball);
     }
 
     public void rotate(double angle) {
@@ -120,6 +118,6 @@ public class Ship extends GameObjectView implements CollideCallback{
     @Override
     public void onCollide() {
         isActive = false;
-        world.destroy(object);
+        game.getWorld().destroy(object);
     }
 }

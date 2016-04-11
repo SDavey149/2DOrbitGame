@@ -49,17 +49,12 @@ public class Game {
         Ball ball4 = new Ball(world, 5000000000000000.0, new Vector2D(300,300), 40);
         view.addObjectView(ball4);
 
-
-
-        Ship ship = new Ship(world, view, new Vector2D(10,300), 12);
+        Ship ship = new Ship(this, new Vector2D(10,300), 12);
         view.addObjectView(ship);
 
-        Ship enemyShip = new EnemyShip(world, view, new Vector2D(worldWidth-10, worldHeight-100), 12);
+        Ship enemyShip = new EnemyShip(this, new Vector2D(worldWidth-10, worldHeight-100), 12);
         enemyShip.rotate(Math.PI);
         view.addObjectView(enemyShip);
-
-
-
         view.addKeyListener(new BasicKeyListener());
         view.requestFocus();
 
