@@ -44,7 +44,7 @@ public class Ball extends GameObjectView implements CollideCallback {
     }
 
     @Override
-    public void onCollide() {
+    public void onCollide(String collidedTag) {
 
     }
 

@@ -24,6 +24,7 @@ public class View extends JComponent {
     List<GameObjectView> objectViews;
     List<GameObjectView> pending;
     List<Vector2D> stars;
+    private int level;
 
     public View(World w, int width, int height) {
         world = w;
@@ -45,6 +46,10 @@ public class View extends JComponent {
         pending = new ArrayList<>(3);
     }
 
+    public void setLevel(int l) {
+        level = l;
+    }
+
     @Override
     public void paintComponent(Graphics g0) {
         List<GameObjectView> pendingRemoval = new ArrayList<>();
@@ -55,6 +60,7 @@ public class View extends JComponent {
         g.setColor(BG);
         g.fillRect(0, 0, width, height);
         drawStars(g);
+        drawInfo(g);
         for (GameObjectView objView : objectViews) {
             if (objView.isActive()) {
                 objView.draw(g, xScale, yScale);
@@ -74,13 +80,17 @@ public class View extends JComponent {
         pending.add(v);
     }
 
-    public void drawStars(Graphics2D g) {
+    private void drawStars(Graphics2D g) {
         g.setColor(Color.WHITE);
         for (Vector2D pos : stars) {
             g.fillOval((int) pos.x - 1, (int) pos.y - 1,
                     2, 2);
         }
 
+    }
+
+    private void drawInfo(Graphics2D g) {
+        g.drawString("Level: " + level, Game.maxWidth-100, 25);
     }
 
     public double getScreenXScale() {

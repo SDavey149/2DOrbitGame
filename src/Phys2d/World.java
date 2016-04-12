@@ -88,8 +88,8 @@ public class World {
                 Shape s1 = g1.getShape();
                 Shape s2 = g2.getShape();
                 if (s1.overlaps(s2)) {
-                    g1.collided();
-                    g2.collided();
+                    g1.collided(g2.tag);
+                    g2.collided(g1.tag);
                 }
             }
         }

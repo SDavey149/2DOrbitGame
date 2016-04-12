@@ -30,7 +30,7 @@ public class Line extends Shape {
         Vector2D normal = tangent.rotate90degreesAnticlockwise();
 
         Vector2D lineToC = Vector2D.minus(circle.object.getPosition(), start);
-        double distNormal = lineToC.scalarProduct(normal);
+        double distNormal = Math.abs(lineToC.scalarProduct(normal));
         double distLine = lineToC.scalarProduct(tangent);
         return distNormal <= circle.getRadius() && distLine >= 0 && distLine <= length;
     }

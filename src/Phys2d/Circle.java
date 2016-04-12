@@ -25,6 +25,7 @@ public class Circle extends Shape {
             return vecFrom1to2.mag()<getRadius()+otherShape.getRadius() && movingTowardsEachOther;
         }
 
+
         return false;
 
     }

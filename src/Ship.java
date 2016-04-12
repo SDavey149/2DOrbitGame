@@ -22,6 +22,7 @@ public class Ship extends GameObjectView implements CollideCallback{
 
     public Ship(Game game, Vector2D position, double radius) {
         GameObject obj3 = new GameObject(position, this);
+        obj3.tag = "Ship";
         obj3.setShape(new Circle(obj3, radius));
         obj3.mass = 1;
         rgb = new RigidBodyImproved(obj3);
@@ -116,7 +117,7 @@ public class Ship extends GameObjectView implements CollideCallback{
     }
 
     @Override
-    public void onCollide() {
+    public void onCollide(String collidedTag) {
         isActive = false;
         game.getWorld().destroy(object);
         game.requestGameOver();

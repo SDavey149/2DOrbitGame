@@ -7,6 +7,7 @@ import Phys2d.World;
 public class EnemyShip extends Ship {
     public EnemyShip(Game game, Vector2D position, double radius) {
         super(game, position, radius);
+        object.tag = "Enemy";
     }
 
     @Override
@@ -15,7 +16,7 @@ public class EnemyShip extends Ship {
     }
 
     @Override
-    public void onCollide() {
+    public void onCollide(String collidedTag) {
         isActive = false;
         game.getWorld().destroy(object);
         game.requestNextLevel();

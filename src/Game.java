@@ -3,6 +3,8 @@ import utilities.BasicKeyListener;
 import utilities.JEasyFrame;
 import Phys2d.Vector2D;
 
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.Random;
 
 /**
@@ -19,6 +21,7 @@ public class Game {
     private boolean moveToNextLevel = false;
     private boolean gameOver = false;
     private Random random;
+    private int level = 1;
 
     public static void main(String[] args) {
         maxWidth = (int)(JEasyFrame.SCREEN.width*0.9);
@@ -49,6 +52,7 @@ public class Game {
     }
 
     public void setup() {
+
         Ball ball2 = new Ball(world, 1000000000000000.0, new Vector2D(100,100), 10);
         view.addObjectView(ball2);
 
@@ -61,16 +65,28 @@ public class Game {
         Ship enemyShip = new EnemyShip(this, new Vector2D(worldWidth-10, worldHeight-100), 12);
         enemyShip.rotate(Math.PI);
         view.addObjectView(enemyShip);
+
+        addBarriers();
+
         view.addKeyListener(new BasicKeyListener());
         view.requestFocus();
 
 
     }
 
+    private void addBarriers() {
+        Barrier bottom = new Barrier(this, new Vector2D(worldWidth/2,0), worldWidth, 0);
+        view.addObjectView(bottom);
+
+        Barrier top = new Barrier(this, new Vector2D(worldWidth/2, worldHeight),worldWidth,0);
+        view.addObjectView(top);
+    }
+
 
     public void runGame() {
         long lastTime = 0;
         while (true) {
+            view.setLevel(level);
             long currentTime = System.currentTimeMillis();
             double delta = (currentTime - lastTime)/1000.0;
             if (lastTime == 0) {
@@ -89,12 +105,35 @@ public class Game {
                 nextLevel();
                 moveToNextLevel = false;
             }
+            if (isGameOver()) {
+                String[] options = {"Play Again", "Quit"};
+                int n = JOptionPane.showOptionDialog(null,
+                        "Game over. You got to level " + level + ". Would you like to play again?",
+                        "Game over",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,     //do not use a custom Icon
+                        options,  //the titles of buttons
+                        options[1]); //default button title
+                System.out.println(n);
+                if (n == 1) {
+                    System.exit(0);
+                } else {
+                    //play again
+                    world.reset();
+                    view.reset();
+                    setup();
+                    gameOver = false;
+                }
+
+            }
             try {
                 Thread.sleep(World.DELAY);
             } catch (InterruptedException e) {
             }
         }
     }
+
 
     public void requestNextLevel() {
         moveToNextLevel = true;
@@ -112,7 +151,7 @@ public class Game {
         //levels after first are randomised
         world.reset();
         view.reset();
-
+        level++;
         //masses between 1000000000000000.0, 6000000000000000.0
         double mass1 = random.nextDouble() * 5000000000000000.0 + 1000000000000000.0;
         double mass2 = random.nextDouble() * 5000000000000000.0 + 1000000000000000.0;
@@ -129,6 +168,8 @@ public class Game {
 
         Ship ship = new Ship(this, new Vector2D(10,250), 12);
         view.addObjectView(ship);
+
+        addBarriers();
 
         double yPos = random.nextInt((int)worldHeight-80)+40; //get y pos, not too close to edges
         Ship enemyShip = new EnemyShip(this, new Vector2D(worldWidth-10, yPos), 12);

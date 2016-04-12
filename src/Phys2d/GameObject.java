@@ -13,6 +13,7 @@ public class GameObject {
     private Body body;
     public World world;
     private CollideCallback collider;
+    public String tag = "Unknown";
 
     public GameObject(Vector2D pos, CollideCallback collider) {
         position = pos;
@@ -94,8 +95,8 @@ public class GameObject {
         acceleration = acc;
     }
 
-    public void collided() {
-        collider.onCollide();
+    public void collided(String tag) {
+        collider.onCollide(tag);
     }
 
 
