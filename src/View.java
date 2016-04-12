@@ -21,9 +21,9 @@ public class View extends JComponent {
     private int width;
     private int height;
 
-    final List<GameObjectView> objectViews;
-    final List<GameObjectView> pending;
-    final List<Vector2D> stars;
+    List<GameObjectView> objectViews;
+    List<GameObjectView> pending;
+    List<Vector2D> stars;
 
     public View(World w, int width, int height) {
         world = w;
@@ -38,6 +38,11 @@ public class View extends JComponent {
             stars.add(new Vector2D(random.nextInt(width), random.nextInt(height)));
         }
 
+    }
+
+    public void reset() {
+        objectViews = new ArrayList<>(100);
+        pending = new ArrayList<>(3);
     }
 
     @Override

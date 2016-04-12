@@ -24,11 +24,15 @@ public class World {
     List<GameObject> pendingRemoval;
 
     public World(double width, double height) {
+        reset();
+        this.width = width;
+        this.height = height;
+    }
+
+    public void reset() {
         gameObjects = new ArrayList<>(100);
         pending = new ArrayList<>();
         pendingRemoval = new ArrayList<>();
-        this.width = width;
-        this.height = height;
     }
 
     public double getWidth() {

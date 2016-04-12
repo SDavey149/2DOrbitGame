@@ -11,11 +11,11 @@ import java.awt.image.PackedColorModel;
  */
 public class Ship extends GameObjectView implements CollideCallback{
 
-    private final static int SPEED = 100;
+    private final static int THRUST_FORCE = 500;
     private final static int FIRE_TIMEOUT = 50;
 
-    private RigidBodyImproved rgb;
-    private Game game;
+    protected RigidBodyImproved rgb;
+    protected Game game;
     final int[] XP = { -2, 0, 2, 0 };
     final int[] YP = { 2, -2, 2, 0 };
     int lastFired;
@@ -44,7 +44,7 @@ public class Ship extends GameObjectView implements CollideCallback{
         } else if (BasicKeyListener.isMoveDownPressed()) {
             moveDown();
         } else {
-            rest();
+            object.getVelocity().mult(0.95);
         }
         if (BasicKeyListener.isRotateLeftKeyPressed()) {
             rotateLeft(delta);
@@ -61,11 +61,11 @@ public class Ship extends GameObjectView implements CollideCallback{
     }
 
     public void moveUp() {
-        object.getVelocity().set(0,SPEED);
+        rgb.addForce(new Vector2D(0, THRUST_FORCE));
     }
 
     public void moveDown() {
-        object.getVelocity().set(0,-SPEED);
+        rgb.addForce(new Vector2D(0, -THRUST_FORCE));
     }
 
     public void rest() {
@@ -98,7 +98,7 @@ public class Ship extends GameObjectView implements CollideCallback{
     @Override
     public void draw(Graphics2D g, double xScreenScale, double yScreenScale) {
         int x = (int) (object.getPosition().x*xScreenScale);
-        int y = (int) (JEasyFrame.SCREEN.height-object.getPosition().y*yScreenScale);
+        int y = (int) (Game.maxHeight-object.getPosition().y*yScreenScale);
         g.setColor(Color.GREEN);
         Circle circle = (Circle) object.getShape();
         double radius = circle.getRadius()*Math.min(yScreenScale, xScreenScale);
@@ -119,5 +119,10 @@ public class Ship extends GameObjectView implements CollideCallback{
     public void onCollide() {
         isActive = false;
         game.getWorld().destroy(object);
+        game.requestGameOver();
+    }
+
+    public Circle getShape() {
+        return (Circle)object.getShape();
     }
 }

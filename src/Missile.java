@@ -64,7 +64,7 @@ public class Missile extends GameObjectView implements CollideCallback {
     public void draw(Graphics2D g, double xScreenScale, double yScreenScale) {
 
         int x = (int) (object.getPosition().x*xScreenScale);
-        int y = (int) (JEasyFrame.SCREEN.height-object.getPosition().y*yScreenScale);
+        int y = (int) (Game.maxHeight-object.getPosition().y*yScreenScale);
         g.setColor(color);
         double radius = circle.getRadius()*xScreenScale;
         if (x >= 0 && x <= JEasyFrame.SCREEN.width

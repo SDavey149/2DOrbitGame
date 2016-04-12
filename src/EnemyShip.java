@@ -13,4 +13,11 @@ public class EnemyShip extends Ship {
     public void controls(double delta) {
         //no controls for the enemy.. would put AI in here
     }
+
+    @Override
+    public void onCollide() {
+        isActive = false;
+        game.getWorld().destroy(object);
+        game.requestNextLevel();
+    }
 }
