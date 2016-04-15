@@ -57,8 +57,7 @@ public class GameObject {
     }
 
     public boolean hasRigidBody() {
-        return body instanceof RigidBodyImproved
-                || body instanceof RigidBodyEuler;
+        return body instanceof RigidBodyImproved;
     }
 
     public Body getBody() {

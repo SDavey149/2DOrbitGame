@@ -14,6 +14,24 @@ public class Line extends Shape {
         this.thickness = thickness;
     }
 
+    public static Line getLineObject(Vector2D start, Vector2D end) {
+        Vector2D midpoint = new Vector2D(start);
+        start.mult(-1);
+        end.add(start);
+        Vector2D line = end; //rename to line
+
+        Vector2D half = new Vector2D(line);
+        half.mult(0.5);
+        midpoint.add(half);
+
+        //get angle to xaxis
+        double rotation = Math.atan2(line.y, line.x);
+        GameObject obj = new GameObject(midpoint, null);
+        obj.rotate(rotation);
+        return new Line(obj, line.mag(), 1);
+
+    }
+
     @Override
     public boolean overlaps(Shape shape) {
         if (shape instanceof Circle) {
