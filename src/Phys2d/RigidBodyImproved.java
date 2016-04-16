@@ -21,10 +21,6 @@ public class RigidBodyImproved extends Body {
 
     @Override
     public void update(double delta) {
-        applyGravity(delta);
-    }
-
-    private void applyGravity(double delta) {
         //a copy of forces to apply for improved euler, incase custom forces used
         Vector2D forceToApply2 = new Vector2D(forceToApply);
 
@@ -56,8 +52,8 @@ public class RigidBodyImproved extends Body {
         object.getVelocity().addScaled(acc2, delta);
 
         forceToApply = new Vector2D();
-
     }
+
 
     private Vector2D getParticleWeight() {
         return new Vector2D(0, -World.gravity*mass);

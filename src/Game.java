@@ -4,7 +4,6 @@ import utilities.JEasyFrame;
 import Phys2d.Vector2D;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.Random;
 
 /**

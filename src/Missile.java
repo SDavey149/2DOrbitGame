@@ -88,8 +88,8 @@ public class Missile extends GameObjectView implements CollideCallback {
 
         for (Vector2D orbitPos : orbitTrace) {
             g.setColor(Color.GRAY);
-            g.fillOval((int)(orbitPos.x - 0.5), (int)(orbitPos.y - 0.5),
-                    1, 1);
+            g.fillOval((int)(orbitPos.x - 1), (int)(orbitPos.y - 1),
+                    2, 2);
         }
         if (orbitTrace.size() > MAX_STEPS_RECORDED) {
             for (int i = 0; i < orbitTrace.size()-MAX_STEPS_RECORDED; i++) {
