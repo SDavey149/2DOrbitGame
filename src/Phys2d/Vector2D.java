@@ -115,6 +115,10 @@ public final class Vector2D implements Serializable {
 
     }
 
+    public double getAngle() {
+        return Math.atan2(y, x);
+    }
+
 
 
     public static Vector2D minus(Vector2D v1, Vector2D v2) {

@@ -2,7 +2,6 @@ package tests;
 
 import Phys2d.GameObject;
 import Phys2d.Line;
-import apple.laf.JRSUIConstants;
 import junit.framework.TestCase;
 import Phys2d.Vector2D;
 

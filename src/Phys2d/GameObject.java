@@ -57,7 +57,7 @@ public class GameObject {
     }
 
     public boolean hasRigidBody() {
-        return body instanceof RigidBodyImproved;
+        return body instanceof RigidBody;
     }
 
     public Body getBody() {

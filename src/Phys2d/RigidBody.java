@@ -4,14 +4,14 @@ package Phys2d;
 /**
  * Created by scottdavey on 02/03/2016.
  */
-public class RigidBodyImproved extends Body {
+public class RigidBody extends Body {
 
     private Vector2D forceToApply;
     private double mass;
     private boolean useGravity;
     private Vector2D frictionForce;
 
-    public RigidBodyImproved(GameObject obj) {
+    public RigidBody(GameObject obj) {
         super(obj);
         this.mass = obj.mass;
         forceToApply = new Vector2D();

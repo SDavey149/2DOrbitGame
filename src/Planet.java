@@ -6,17 +6,17 @@ import java.awt.*;
 /**
  * Created by scottdavey on 02/03/2016.
  */
-public class Ball extends GameObjectView implements CollideCallback {
+public class Planet extends GameObjectView implements CollideCallback {
 
     Circle circle;
     Color color;
 
 
-    public Ball(World world, double mass, Vector2D pos, double radius) {
+    public Planet(World world, double mass, Vector2D pos, double radius) {
         GameObject obj2 = new GameObject(pos, this);
         obj2.setShape(new Circle(obj2, radius));
         obj2.mass = mass;
-        //RigidBodyImproved b2 = new RigidBodyImproved(obj2);
+        //RigidBody b2 = new RigidBody(obj2);
         //obj2.addRigidBody(b2);
         object = obj2;
         world.addGameObject(object);

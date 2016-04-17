@@ -52,11 +52,11 @@ public class Game {
 
     public void setup() {
 
-        Ball ball2 = new Ball(world, 1000000000000000.0, new Vector2D(100,100), 10);
-        view.addObjectView(ball2);
+        Planet planet2 = new Planet(world, 1000000000000000.0, new Vector2D(100,100), 10);
+        view.addObjectView(planet2);
 
-        Ball ball4 = new Ball(world, 5000000000000000.0, new Vector2D(300,300), 50);
-        view.addObjectView(ball4);
+        Planet planet4 = new Planet(world, 5000000000000000.0, new Vector2D(300,300), 50);
+        view.addObjectView(planet4);
 
         Ship ship = new Ship(this, new Vector2D(10,250), 12);
         view.addObjectView(ship);
@@ -158,11 +158,11 @@ public class Game {
         Vector2D pos1 = new Vector2D(random.nextInt(200)+50, random.nextInt(300)+100);
         Vector2D pos2 = new Vector2D(random.nextInt(150)+300, random.nextInt(300)+100);
 
-        Ball ball2 = new Ball(world, mass1, pos1, mass1/100000000000000.0);
-        view.addObjectView(ball2);
+        Planet planet2 = new Planet(world, mass1, pos1, mass1/100000000000000.0);
+        view.addObjectView(planet2);
 
-        Ball ball4 = new Ball(world, mass2, pos2, mass2/100000000000000.0);
-        view.addObjectView(ball4);
+        Planet planet4 = new Planet(world, mass2, pos2, mass2/100000000000000.0);
+        view.addObjectView(planet4);
 
 
         Ship ship = new Ship(this, new Vector2D(10,250), 12);

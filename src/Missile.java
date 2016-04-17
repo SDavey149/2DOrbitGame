@@ -1,6 +1,4 @@
 import Phys2d.*;
-import javafx.util.Pair;
-import org.omg.CORBA.ORB;
 import utilities.JEasyFrame;
 
 import java.awt.*;
@@ -13,7 +11,7 @@ import java.util.List;
 public class Missile extends GameObjectView implements CollideCallback {
     Circle circle;
     Color color;
-    RigidBodyImproved rgb;
+    RigidBody rgb;
     private double fuel;
     private double missileMass;
     private static int MISSILE_THRUST = 20000;
@@ -32,7 +30,7 @@ public class Missile extends GameObjectView implements CollideCallback {
         bullet.setShape(new Circle(bullet, 0.4));
         initialDirection.mult(MISSILE_THRUST);
         bullet.mass = 1;
-        rgb = new RigidBodyImproved(bullet);
+        rgb = new RigidBody(bullet);
         bullet.addRigidBody(rgb);
         rgb.addForce(initialDirection);
         object = bullet;

@@ -1,10 +1,8 @@
 import Phys2d.*;
 import utilities.BasicKeyListener;
-import utilities.JEasyFrame;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.PackedColorModel;
 
 /**
  * Created by scottdavey on 08/03/2016.
@@ -14,7 +12,7 @@ public class Ship extends GameObjectView implements CollideCallback{
     private final static int THRUST_FORCE = 500;
     private final static int FIRE_TIMEOUT = 50;
 
-    protected RigidBodyImproved rgb;
+    protected RigidBody rgb;
     protected Game game;
     final int[] XP = { -2, 0, 2, 0 };
     final int[] YP = { 2, -2, 2, 0 };
@@ -25,7 +23,7 @@ public class Ship extends GameObjectView implements CollideCallback{
         obj3.tag = "Ship";
         obj3.setShape(new Circle(obj3, radius));
         obj3.mass = 1;
-        rgb = new RigidBodyImproved(obj3);
+        rgb = new RigidBody(obj3);
         rgb.useGravity(false);
         obj3.addRigidBody(rgb);
         object = obj3;
