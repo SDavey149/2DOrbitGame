@@ -25,7 +25,7 @@ public class EnemyShip extends Ship {
     public void controls(double delta) {
         //no controls for the enemy.. would put AI in here
         shootTimeout++;
-        if (shootTimeout > 100) {
+        if (shootTimeout > 150) {
             shootTimeout = 0;
             object.rotate(random.nextInt(4)-2);
             fire();

@@ -15,7 +15,6 @@ public class Missile extends GameObjectView implements CollideCallback {
     private double fuel;
     private double missileMass;
     private static int MISSILE_THRUST = 20000;
-    private static int FUEL_USE_PER_SECOND = 1;
     public static final int ORBIT_STEP_INTERVAL = 2;
     public static final int MAX_STEPS_RECORDED = 200;
     public static final int TIME_TO_LIVE = 300;
@@ -54,7 +53,8 @@ public class Missile extends GameObjectView implements CollideCallback {
             direction.normalise();
             direction.mult(MISSILE_THRUST*delta);
             rgb.addForce(direction);
-            fuel -= FUEL_USE_PER_SECOND*delta;
+            int FUEL_USE_PER_SECOND = 1;
+            fuel -= FUEL_USE_PER_SECOND *delta;
         }
 
     }
