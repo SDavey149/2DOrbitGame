@@ -24,15 +24,14 @@ public class Missile extends GameObjectView implements CollideCallback {
     private World world;
 
     public Missile(World world, Vector2D pos, Vector2D initialForce, int initialFuelSize) {
-        GameObject bullet = new GameObject(pos, this);
-        bullet.tag = "Missile";
-        bullet.setShape(new Circle(bullet, 0.4));
-        //initialForce.mult(MISSILE_THRUST);
-        bullet.mass = 1;
-        rgb = new RigidBody(bullet);
-        bullet.addRigidBody(rgb);
+        object = new GameObject(pos, this);
+        object.tag = "Missile";
+        object.setShape(new Circle(object, 0.4));
+        object.mass = 1;
+        rgb = new RigidBody(object);
+        object.addRigidBody(rgb);
         rgb.addForce(initialForce);
-        object = bullet;
+
         this.world = world;
         this.world.addGameObject(object);
         orbitSteps = ORBIT_STEP_INTERVAL;
@@ -106,7 +105,6 @@ public class Missile extends GameObjectView implements CollideCallback {
         if (!collidedTag.equals("Barrier")) {
             isActive = false;
             world.destroy(object);
-            System.out.println("destroyed");
         }
 
     }

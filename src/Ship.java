@@ -20,14 +20,13 @@ public class Ship extends GameObjectView implements CollideCallback{
     int fireHeld;
 
     public Ship(Game game, Vector2D position, double radius) {
-        GameObject obj3 = new GameObject(position, this);
-        obj3.tag = "Ship";
-        obj3.setShape(new Circle(obj3, radius));
-        obj3.mass = 1;
-        rgb = new RigidBody(obj3);
+        object = new GameObject(position, this);
+        object.tag = "Ship";
+        object.setShape(new Circle(object, radius));
+        object.mass = 1;
+        rgb = new RigidBody(object);
         rgb.useGravity(false);
-        obj3.addRigidBody(rgb);
-        object = obj3;
+        object.addRigidBody(rgb);
         this.game = game;
         this.game.getWorld().addGameObject(object);
         lastFired = 0;

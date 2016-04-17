@@ -13,12 +13,11 @@ public class Planet extends GameObjectView implements CollideCallback {
 
 
     public Planet(World world, double mass, Vector2D pos, double radius) {
-        GameObject obj2 = new GameObject(pos, this);
-        obj2.setShape(new Circle(obj2, radius));
-        obj2.mass = mass;
+        object = new GameObject(pos, this);
+        object.setShape(new Circle(object, radius));
+        object.mass = mass;
         //RigidBody b2 = new RigidBody(obj2);
         //obj2.addRigidBody(b2);
-        object = obj2;
         world.addGameObject(object);
 
         circle = (Circle)object.getShape();
