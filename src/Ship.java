@@ -10,13 +10,14 @@ import java.awt.geom.AffineTransform;
 public class Ship extends GameObjectView implements CollideCallback{
 
     private final static int THRUST_FORCE = 500;
-    private final static int FIRE_TIMEOUT = 50;
+    public final static int FIRE_TIMEOUT = 30;
 
     protected RigidBody rgb;
     protected Game game;
     final int[] XP = { -2, 0, 2, 0 };
     final int[] YP = { 2, -2, 2, 0 };
     int lastFired;
+    int fireHeld;
 
     public Ship(Game game, Vector2D position, double radius) {
         GameObject obj3 = new GameObject(position, this);
@@ -30,6 +31,7 @@ public class Ship extends GameObjectView implements CollideCallback{
         this.game = game;
         this.game.getWorld().addGameObject(object);
         lastFired = 0;
+        fireHeld = 0;
     }
 
     @Override
@@ -52,8 +54,19 @@ public class Ship extends GameObjectView implements CollideCallback{
             rotateRight(delta);
         }
         if (BasicKeyListener.isFireButtonPressed() && lastFired <= 0) {
-            fire();
-            lastFired = FIRE_TIMEOUT;
+            fireHeld++;
+        }
+        if (fireHeld > 0 && !BasicKeyListener.isFireButtonPressed()) {
+            if (lastFired <= 0) {
+                int basePower = 20000;
+                if (fireHeld > 100) {
+                    fireHeld = 100;
+                }
+                basePower += fireHeld*300;
+                fire(basePower);
+                lastFired = FIRE_TIMEOUT;
+            }
+            fireHeld = 0;
         }
         lastFired--;
 
@@ -79,13 +92,15 @@ public class Ship extends GameObjectView implements CollideCallback{
         object.rotate(2 * Math.PI * delta);
     }
 
-    public void fire() {
+    public void fire(int power) {
         Vector2D missileDirection = object.getRotation();
         Vector2D position = new Vector2D(object.getPosition());
         double radius = ((Circle)(object.getShape())).getRadius();
         //spawn it outside of ship, not sure why the radius must be /2, mismatch somewhere..
         position.addScaled(missileDirection, (radius / 2) + 1);
-        Missile ball = new Missile(game.getWorld(), position, new Vector2D(missileDirection), 5);
+        Vector2D initialForce = new Vector2D(missileDirection);
+        initialForce.mult(power);
+        Missile ball = new Missile(game.getWorld(), position, initialForce, 5);
         ball.setColor(Color.GREEN);
         game.getView().addObjectView(ball);
     }
@@ -110,8 +125,9 @@ public class Ship extends GameObjectView implements CollideCallback{
         g.fillPolygon(XP, YP, XP.length);
         g.setTransform(at);
 
+        /* Draw collider
         g.setColor(Color.RED);
-        g.drawOval((int) (x - radius), (int) (y - radius), (int) (2 * radius), (int) (2 * radius));
+        g.drawOval((int) (x - radius), (int) (y - radius), (int) (2 * radius), (int) (2 * radius));*/
     }
 
     @Override
